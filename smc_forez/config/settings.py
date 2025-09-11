@@ -59,3 +59,20 @@ class Settings:
     timeframes: List[Timeframe] = field(default_factory=lambda: [
         Timeframe.M15, Timeframe.H1, Timeframe.H4, Timeframe.D1
     ])
+    
+    # Major forex symbols for backtesting (7+ symbols)
+    major_symbols: List[str] = field(default_factory=lambda: [
+        "EURUSD", "GBPUSD", "USDJPY", "USDCHF", "AUDUSD", "USDCAD", "NZDUSD"
+    ])
+    
+    # Extended symbol list for signal generation (28+ symbols)
+    all_symbols: List[str] = field(default_factory=lambda: [
+        # Major pairs
+        "EURUSD", "GBPUSD", "USDJPY", "USDCHF", "AUDUSD", "USDCAD", "NZDUSD",
+        # Minor pairs
+        "EURJPY", "EURGBP", "EURCHF", "EURAUD", "EURCAD", "EURNZD",
+        "GBPJPY", "GBPCHF", "GBPAUD", "GBPCAD", "GBPNZD",
+        "AUDJPY", "AUDCHF", "AUDCAD", "AUDNZD",
+        "NZDJPY", "NZDCHF", "NZDCAD",
+        "CADJPY", "CADCHF", "CHFJPY"
+    ])

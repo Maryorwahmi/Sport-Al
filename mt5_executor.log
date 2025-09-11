@@ -1,0 +1,128 @@
+2025-09-11 20:17:16,127 - WARNING - MetaTrader5 not available - running in simulation mode
+2025-09-11 20:17:16,128 - INFO - MT5 not available - using simulation mode
+2025-09-11 20:17:16,129 - INFO - Loading 5 signals from live_signals/live_signals_20250911_201709.json
+2025-09-11 20:17:16,129 - INFO - 
+============================================================
+2025-09-11 20:17:16,129 - INFO - EXECUTING SIGNAL 1/5
+2025-09-11 20:17:16,129 - INFO - ============================================================
+2025-09-11 20:17:16,129 - ERROR - Trading not allowed for EURUSD
+2025-09-11 20:17:16,129 - ERROR - ❌ Signal 1 execution failed
+2025-09-11 20:17:17,129 - INFO - 
+============================================================
+2025-09-11 20:17:17,130 - INFO - EXECUTING SIGNAL 2/5
+2025-09-11 20:17:17,130 - INFO - ============================================================
+2025-09-11 20:17:17,130 - ERROR - Trading not allowed for GBPUSD
+2025-09-11 20:17:17,130 - ERROR - ❌ Signal 2 execution failed
+2025-09-11 20:17:18,130 - INFO - 
+============================================================
+2025-09-11 20:17:18,130 - INFO - EXECUTING SIGNAL 3/5
+2025-09-11 20:17:18,130 - INFO - ============================================================
+2025-09-11 20:17:18,130 - ERROR - Trading not allowed for USDJPY
+2025-09-11 20:17:18,130 - ERROR - ❌ Signal 3 execution failed
+2025-09-11 20:17:19,131 - INFO - 
+============================================================
+2025-09-11 20:17:19,131 - INFO - EXECUTING SIGNAL 4/5
+2025-09-11 20:17:19,131 - INFO - ============================================================
+2025-09-11 20:17:19,131 - ERROR - Trading not allowed for AUDUSD
+2025-09-11 20:17:19,131 - ERROR - ❌ Signal 4 execution failed
+2025-09-11 20:17:20,131 - INFO - 
+============================================================
+2025-09-11 20:17:20,131 - INFO - EXECUTING SIGNAL 5/5
+2025-09-11 20:17:20,131 - INFO - ============================================================
+2025-09-11 20:17:20,132 - ERROR - Trading not allowed for USDCAD
+2025-09-11 20:17:20,132 - ERROR - ❌ Signal 5 execution failed
+2025-09-11 20:17:21,132 - INFO - 
+📊 EXECUTION SUMMARY
+2025-09-11 20:17:21,132 - INFO -    Total Signals: 5
+2025-09-11 20:17:21,132 - INFO -    Successfully Executed: 0
+2025-09-11 20:17:21,132 - INFO -    Failed: 5
+2025-09-11 20:17:21,132 - ERROR - Trading not allowed for EURUSD
+2025-09-11 20:17:38,195 - WARNING - MetaTrader5 not available - running in simulation mode
+2025-09-11 20:17:38,196 - INFO - MT5 not available - using simulation mode
+2025-09-11 20:17:38,197 - INFO - Loading 5 signals from live_signals/live_signals_20250911_201709.json
+2025-09-11 20:17:38,197 - INFO - 
+============================================================
+2025-09-11 20:17:38,197 - INFO - EXECUTING SIGNAL 1/5
+2025-09-11 20:17:38,197 - INFO - ============================================================
+2025-09-11 20:17:38,197 - INFO - Calculated position size: 0.2 lots (Risk: $100.00, Pip distance: 500.0)
+2025-09-11 20:17:38,197 - INFO - Executing BUY order for EURUSD
+2025-09-11 20:17:38,197 - INFO - Entry: 1.10000, SL: 1.10000, TP: 1.11500
+2025-09-11 20:17:38,197 - INFO - Volume: 0.2 lots
+2025-09-11 20:17:38,197 - INFO - ✅ Order executed successfully!
+2025-09-11 20:17:38,197 - INFO -    Ticket: 12345
+2025-09-11 20:17:38,197 - INFO -    Deal: 12345
+2025-09-11 20:17:38,197 - INFO -    Execution Price: 1.10000
+2025-09-11 20:17:38,197 - INFO -    Volume: 0.2 lots
+2025-09-11 20:17:38,197 - INFO - ✅ Signal 1 executed successfully
+2025-09-11 20:17:39,197 - INFO - 
+============================================================
+2025-09-11 20:17:39,198 - INFO - EXECUTING SIGNAL 2/5
+2025-09-11 20:17:39,198 - INFO - ============================================================
+2025-09-11 20:17:39,198 - INFO - Calculated position size: 0.2 lots (Risk: $100.00, Pip distance: 500.0)
+2025-09-11 20:17:39,198 - INFO - Executing SELL order for GBPUSD
+2025-09-11 20:17:39,198 - INFO - Entry: 1.09980, SL: 1.29000, TP: 1.27500
+2025-09-11 20:17:39,198 - INFO - Volume: 0.2 lots
+2025-09-11 20:17:39,198 - INFO - ✅ Order executed successfully!
+2025-09-11 20:17:39,198 - INFO -    Ticket: 12345
+2025-09-11 20:17:39,198 - INFO -    Deal: 12345
+2025-09-11 20:17:39,198 - INFO -    Execution Price: 1.09980
+2025-09-11 20:17:39,198 - INFO -    Volume: 0.2 lots
+2025-09-11 20:17:39,198 - INFO - ✅ Signal 2 executed successfully
+2025-09-11 20:17:40,198 - INFO - 
+============================================================
+2025-09-11 20:17:40,199 - INFO - EXECUTING SIGNAL 3/5
+2025-09-11 20:17:40,199 - INFO - ============================================================
+2025-09-11 20:17:40,199 - INFO - Calculated position size: 0.01 lots (Risk: $100.00, Pip distance: 70000.0)
+2025-09-11 20:17:40,199 - INFO - Executing BUY order for USDJPY
+2025-09-11 20:17:40,199 - INFO - Entry: 1.10000, SL: 148.80000, TP: 151.20000
+2025-09-11 20:17:40,199 - INFO - Volume: 0.01 lots
+2025-09-11 20:17:40,199 - INFO - ✅ Order executed successfully!
+2025-09-11 20:17:40,199 - INFO -    Ticket: 12345
+2025-09-11 20:17:40,199 - INFO -    Deal: 12345
+2025-09-11 20:17:40,199 - INFO -    Execution Price: 1.10000
+2025-09-11 20:17:40,199 - INFO -    Volume: 0.01 lots
+2025-09-11 20:17:40,199 - INFO - ✅ Signal 3 executed successfully
+2025-09-11 20:17:41,200 - INFO - 
+============================================================
+2025-09-11 20:17:41,200 - INFO - EXECUTING SIGNAL 4/5
+2025-09-11 20:17:41,200 - INFO - ============================================================
+2025-09-11 20:17:41,200 - INFO - Calculated position size: 0.2 lots (Risk: $100.00, Pip distance: 500.0)
+2025-09-11 20:17:41,200 - INFO - Executing BUY order for AUDUSD
+2025-09-11 20:17:41,200 - INFO - Entry: 1.10000, SL: 0.66000, TP: 0.67500
+2025-09-11 20:17:41,200 - INFO - Volume: 0.2 lots
+2025-09-11 20:17:41,200 - INFO - ✅ Order executed successfully!
+2025-09-11 20:17:41,200 - INFO -    Ticket: 12345
+2025-09-11 20:17:41,200 - INFO -    Deal: 12345
+2025-09-11 20:17:41,200 - INFO -    Execution Price: 1.10000
+2025-09-11 20:17:41,200 - INFO -    Volume: 0.2 lots
+2025-09-11 20:17:41,200 - INFO - ✅ Signal 4 executed successfully
+2025-09-11 20:17:42,201 - INFO - 
+============================================================
+2025-09-11 20:17:42,201 - INFO - EXECUTING SIGNAL 5/5
+2025-09-11 20:17:42,201 - INFO - ============================================================
+2025-09-11 20:17:42,201 - INFO - Calculated position size: 0.2 lots (Risk: $100.00, Pip distance: 500.0)
+2025-09-11 20:17:42,201 - INFO - Executing SELL order for USDCAD
+2025-09-11 20:17:42,201 - INFO - Entry: 1.09980, SL: 1.35700, TP: 1.34200
+2025-09-11 20:17:42,201 - INFO - Volume: 0.2 lots
+2025-09-11 20:17:42,201 - INFO - ✅ Order executed successfully!
+2025-09-11 20:17:42,201 - INFO -    Ticket: 12345
+2025-09-11 20:17:42,201 - INFO -    Deal: 12345
+2025-09-11 20:17:42,201 - INFO -    Execution Price: 1.09980
+2025-09-11 20:17:42,201 - INFO -    Volume: 0.2 lots
+2025-09-11 20:17:42,201 - INFO - ✅ Signal 5 executed successfully
+2025-09-11 20:17:43,202 - INFO - 
+📊 EXECUTION SUMMARY
+2025-09-11 20:17:43,202 - INFO -    Total Signals: 5
+2025-09-11 20:17:43,202 - INFO -    Successfully Executed: 5
+2025-09-11 20:17:43,202 - INFO -    Failed: 0
+2025-09-11 20:17:43,202 - INFO - ✓ Executed trades saved to: executed_trades/executed_trades_20250911_201743.json
+2025-09-11 20:17:43,203 - INFO - Calculated position size: 0.2 lots (Risk: $100.00, Pip distance: 500.0)
+2025-09-11 20:17:43,203 - INFO - Executing BUY order for EURUSD
+2025-09-11 20:17:43,203 - INFO - Entry: 1.10000, SL: 1.09500, TP: 1.10750
+2025-09-11 20:17:43,203 - INFO - Volume: 0.2 lots
+2025-09-11 20:17:43,203 - INFO - ✅ Order executed successfully!
+2025-09-11 20:17:43,203 - INFO -    Ticket: 12345
+2025-09-11 20:17:43,203 - INFO -    Deal: 12345
+2025-09-11 20:17:43,203 - INFO -    Execution Price: 1.10000
+2025-09-11 20:17:43,203 - INFO -    Volume: 0.2 lots
+2025-09-11 20:17:43,203 - INFO - ✓ Executed trades saved to: executed_trades/executed_trades_20250911_201743.json
