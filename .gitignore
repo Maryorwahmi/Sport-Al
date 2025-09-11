@@ -34,9 +34,14 @@ ENV/
 # Data files
 *.csv
 *.xlsx
-*.json
 data/
 logs/
+
+# Generated files and results
+backtest_results/
+live_signals/
+executed_trades/
+*.log
 
 # Environment variables
 .env
