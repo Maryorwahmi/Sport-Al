@@ -52,8 +52,8 @@ def analyze_command(args):
         mt5_account=args.account,
         mt5_password=args.password,
         mt5_server=args.server,
-        min_rr_ratio=args.min_rr,
-        min_confluence=args.min_confluence
+        min_rr_ratio=getattr(args, 'min_rr', 1.5),
+        min_confluence=getattr(args, 'min_confluence', 3)
     )
     
     # Connect to MT5
@@ -61,11 +61,18 @@ def analyze_command(args):
         print("❌ Failed to connect to MetaTrader 5")
         print("Note: MT5 connection is optional for demo purposes")
         print("Continuing with simulated data analysis...\n")
+        
+        # Mock the MT5 connector for demo
+        from examples import create_sample_data
+        def mock_get_historical_data(symbol, timeframe, count):
+            return create_sample_data(symbol, count)
+        analyzer.mt5_connector.get_historical_data = mock_get_historical_data
+        analyzer.mt5_connector.is_connected = True
     else:
         print("✅ Connected to MetaTrader 5\n")
     
     try:
-        if args.symbol:
+        if hasattr(args, 'symbol') and args.symbol:
             # Analyze single symbol
             timeframe = parse_timeframe(args.timeframe)
             print(f"📊 Analyzing {args.symbol} on {args.timeframe}...")
@@ -83,14 +90,15 @@ def analyze_command(args):
             else:
                 print("❌ Analysis failed. Check symbol and MT5 connection.")
         
-        elif args.scan:
+        elif hasattr(args, 'scan') and args.scan:
             # Scan multiple symbols
             print("🔍 Scanning multiple symbols for opportunities...")
             
-            symbols = args.symbols.split(',') if args.symbols else None
-            timeframe = parse_timeframe(args.timeframe)
+            symbols = args.symbols.split(',') if hasattr(args, 'symbols') and args.symbols else None
+            timeframe = parse_timeframe(getattr(args, 'timeframe', 'H1'))
+            bars = getattr(args, 'bars', 500)
             
-            results = analyzer.scan_multiple_symbols(symbols, timeframe, args.bars)
+            results = analyzer.scan_multiple_symbols(symbols, timeframe, bars)
             
             if results:
                 print(f"\n📈 SCAN RESULTS ({len(results)} symbols analyzed):")
@@ -121,14 +129,17 @@ def analyze_command(args):
             else:
                 print("❌ No analysis results obtained.")
         
-        elif args.live:
+        elif hasattr(args, 'live') and args.live:
             # Get live signals
             print("⚡ Getting live trading signals...")
             
-            symbols = args.symbols.split(',') if args.symbols else None
-            timeframes = [parse_timeframe(tf) for tf in args.timeframes.split(',')] if args.timeframes else None
+            symbols = getattr(args, 'symbols', None)
+            symbols = symbols.split(',') if symbols else None
+            timeframes_str = getattr(args, 'timeframes', 'H1,H4')
+            timeframes = [parse_timeframe(tf) for tf in timeframes_str.split(',')]
+            min_confidence = getattr(args, 'min_confidence', 0.6)
             
-            signals = analyzer.get_live_signals(symbols, timeframes, args.min_confidence)
+            signals = analyzer.get_live_signals(symbols, timeframes, min_confidence)
             
             if signals:
                 print(f"\n🎯 LIVE SIGNALS ({len(signals)} found):")
@@ -137,7 +148,7 @@ def analyze_command(args):
             else:
                 print("No live signals meet the confidence criteria.")
         
-        elif args.overview:
+        elif hasattr(args, 'overview') and args.overview:
             # Market overview
             print("🌍 Getting market overview...")
             
