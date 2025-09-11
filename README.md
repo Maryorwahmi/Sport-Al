@@ -37,20 +37,43 @@ A comprehensive, modular, and production-ready Python-based Forex analysis tool 
 - **Entry Precision**: Optimal timeframe selection for entries
 - **Confluence Scoring**: Weighted timeframe analysis
 
-### 🔙 Backtesting & Performance Analysis
-- **Historical Testing**: Comprehensive backtesting on MT5 data
+### 🔙 Backtesting & Performance Analysis ✅ **READY TO USE**
+- **Standalone Backtest Runner**: Run backtests without MT5 connection
+- **Historical Testing**: Comprehensive backtesting on any OHLC data
 - **Performance Metrics**: Win rate, profit factor, drawdown, Sharpe ratio
 - **Trade Analysis**: Detailed trade breakdown and statistics
 - **Export Options**: CSV and JSON result export
+- **Sample Data**: Built-in sample data generator for testing
+
+#### Quick Start Backtesting
+```bash
+# Run a complete backtest with sample data (no MT5 required)
+python run_backtest.py
+
+# Or use the examples
+python examples/backtest_examples.py
+```
 
 ## Installation
 
 ### Prerequisites
 - Python 3.8 or higher
-- MetaTrader 5 terminal (for live data)
+- MetaTrader 5 terminal (for live data - **optional for backtesting**)
 - Required Python packages (see requirements.txt)
 
-### Install from Source
+### Quick Install (Backtesting Only)
+```bash
+git clone https://github.com/Maryorwahmi/SMC-Forez.git
+cd SMC-Forez
+
+# Install minimal dependencies for backtesting
+pip install pandas numpy
+
+# Test that backtesting works
+python run_backtest.py
+```
+
+### Full Install (All Features)
 ```bash
 git clone https://github.com/Maryorwahmi/SMC-Forez.git
 cd SMC-Forez
