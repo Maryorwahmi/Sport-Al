@@ -182,7 +182,7 @@ class ContinuousSignalRunner:
         # Use extended symbol list for signal generation
         self.symbols = self.settings.all_symbols
         
-    def generate_fresh_data(self, symbol: str, timeframe: str = "H1", hours: int = 48) -> pd.DataFrame:
+    def generate_fresh_data(self, symbol: str, timeframe: str = "H1", hours: int = 120) -> pd.DataFrame:
         """
         Generate fresh market data for signal analysis
         

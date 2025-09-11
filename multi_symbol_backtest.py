@@ -67,15 +67,15 @@ class MultiSymbolBacktester:
         start_date = end_date - timedelta(days=days)
         
         if timeframe == "H1":
-            dates = pd.date_range(start=start_date, end=end_date, freq='H')[:num_bars]
+            dates = pd.date_range(start=start_date, end=end_date, freq='h')[:num_bars]
         elif timeframe == "H4":
-            dates = pd.date_range(start=start_date, end=end_date, freq='4H')[:num_bars]
+            dates = pd.date_range(start=start_date, end=end_date, freq='4h')[:num_bars]
         elif timeframe == "D1":
             dates = pd.date_range(start=start_date, end=end_date, freq='D')[:num_bars]
         elif timeframe == "M15":
             dates = pd.date_range(start=start_date, end=end_date, freq='15T')[:num_bars]
         else:
-            dates = pd.date_range(start=start_date, end=end_date, freq='H')[:num_bars]
+            dates = pd.date_range(start=start_date, end=end_date, freq='h')[:num_bars]
         
         # Set base price for different symbols
         base_prices = {
@@ -164,20 +164,35 @@ class MultiSymbolBacktester:
         data_len = len(data)
         
         # Use different signal densities for different market conditions
+        # Ensure we have valid range for signal positions
+        min_pos = min(50, data_len // 4)  # Use 50 or 1/4 of data, whichever is smaller
+        max_pos = max(min_pos + 1, data_len - 10)  # Leave 10 bars at the end
+        
+        if max_pos <= min_pos:
+            logger.warning(f"Not enough data for signal generation: {data_len} bars")
+            return signals
+            
+        available_positions = range(min_pos, max_pos)
+        actual_signals = min(num_signals, len(available_positions))
+        
         signal_positions = np.random.choice(
-            range(100, data_len - 50), size=num_signals, replace=False
+            available_positions, size=actual_signals, replace=False
         )
         signal_positions.sort()
         
         for i, pos in enumerate(signal_positions):
             # Analyze local market conditions around this position
-            window = data.iloc[max(0, pos-50):pos+1]
+            lookback = min(50, pos)  # Use available data for lookback
+            window = data.iloc[max(0, pos-lookback):pos+1]
             
             current_price = data.iloc[pos]['Close']
             
             # Calculate technical indicators for signal quality
-            sma_20 = window['Close'].rolling(20).mean().iloc[-1]
-            sma_50 = window['Close'].rolling(50).mean().iloc[-1] if len(window) >= 50 else sma_20
+            sma_20_period = min(20, len(window))
+            sma_50_period = min(50, len(window))
+            
+            sma_20 = window['Close'].rolling(sma_20_period).mean().iloc[-1]
+            sma_50 = window['Close'].rolling(sma_50_period).mean().iloc[-1] if len(window) >= sma_50_period else sma_20
             
             price_above_sma20 = current_price > sma_20
             sma_trend = sma_20 > sma_50
