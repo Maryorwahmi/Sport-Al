@@ -73,7 +73,7 @@ class MultiSymbolBacktester:
         elif timeframe == "D1":
             dates = pd.date_range(start=start_date, end=end_date, freq='D')[:num_bars]
         elif timeframe == "M15":
-            dates = pd.date_range(start=start_date, end=end_date, freq='15T')[:num_bars]
+            dates = pd.date_range(start=start_date, end=end_date, freq='15min')[:num_bars]
         else:
             dates = pd.date_range(start=start_date, end=end_date, freq='h')[:num_bars]
         
