@@ -99,6 +99,7 @@ class MT5DataSource:
         self.password = password
         self.server = server
         self.connected = False
+        self.is_mock = not MT5_AVAILABLE  # Track if we're using mock data
         
         if not MT5_AVAILABLE:
             logger.warning("MetaTrader5 not available - using mock data for testing")
