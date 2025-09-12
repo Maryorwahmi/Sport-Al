@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Continuous Signal Runner for SMC Forez
-Generates high-quality signals every 30 minutes for 28+ symbols with noise filtering
+Enhanced Continuous Signal Runner for SMC Forez using Real Multi-Timeframe Analysis
+Generates high-quality signals using the actual SMC analyzer with professional market structure analysis
 """
 import sys
 import os
@@ -20,9 +20,9 @@ from dataclasses import asdict
 project_root = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, project_root)
 
+from smc_forez.analyzer import SMCAnalyzer
 from smc_forez.config.settings import Settings, Timeframe
 from smc_forez.signals.signal_generator import SignalType, SignalStrength
-from multi_symbol_backtest import MultiSymbolBacktester
 
 # Configure logging
 logging.basicConfig(
