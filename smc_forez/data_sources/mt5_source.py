@@ -1,13 +1,82 @@
 """
 MetaTrader 5 data source integration
 """
-import MetaTrader5 as mt5
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 from typing import Optional, Dict, List
 import logging
 from ..config.settings import Timeframe
+
+# Try to import MetaTrader5 - graceful fallback if not available
+try:
+    import MetaTrader5 as mt5
+    MT5_AVAILABLE = True
+except ImportError:
+    MT5_AVAILABLE = False
+    # Create a mock MT5 module for testing
+    class MockMT5:
+        # Timeframe constants
+        TIMEFRAME_M1 = 1
+        TIMEFRAME_M5 = 5
+        TIMEFRAME_M15 = 15
+        TIMEFRAME_H1 = 16385
+        TIMEFRAME_H4 = 16388
+        TIMEFRAME_D1 = 16408
+        
+        @staticmethod
+        def initialize(): return True
+        @staticmethod
+        def login(login, password, server): return True
+        @staticmethod
+        def shutdown(): pass
+        @staticmethod
+        def copy_rates_from_pos(symbol, timeframe, start_pos, count):
+            # Generate sample data for testing
+            import numpy as np
+            dates = pd.date_range(start=datetime.now() - timedelta(days=count), 
+                                periods=count, freq='H')
+            base_price = 1.0850 if 'USD' in symbol else 1.2500
+            
+            # Generate realistic OHLC data
+            returns = np.random.normal(0, 0.001, count)
+            prices = base_price + np.cumsum(returns)
+            
+            data = []
+            for i, (date, price) in enumerate(zip(dates, prices)):
+                open_price = price
+                high_price = price + abs(np.random.normal(0, 0.0005))
+                low_price = price - abs(np.random.normal(0, 0.0005))
+                close_price = price + np.random.normal(0, 0.0003)
+                
+                data.append({
+                    'time': int(date.timestamp()),
+                    'open': open_price,
+                    'high': high_price, 
+                    'low': low_price,
+                    'close': close_price,
+                    'tick_volume': np.random.randint(100, 1000),
+                    'spread': 2,
+                    'real_volume': 0
+                })
+            
+            return np.array([(d['time'], d['open'], d['high'], d['low'], 
+                            d['close'], d['tick_volume'], d['spread'], d['real_volume'])
+                           for d in data],
+                          dtype=[('time', '<i8'), ('open', '<f8'), ('high', '<f8'), 
+                                ('low', '<f8'), ('close', '<f8'), ('tick_volume', '<i8'),
+                                ('spread', '<i4'), ('real_volume', '<i8')])
+        
+        @staticmethod
+        def copy_rates_from(symbol, timeframe, start_date, count):
+            # Same as copy_rates_from_pos for mock
+            return MockMT5.copy_rates_from_pos(symbol, timeframe, 0, count)
+        
+        @staticmethod
+        def symbol_info(symbol):
+            return type('obj', (object,), {'spread': 2, 'point': 0.00001})()
+    
+    mt5 = MockMT5()
 
 
 logger = logging.getLogger(__name__)
@@ -31,6 +100,9 @@ class MT5DataSource:
         self.server = server
         self.connected = False
         
+        if not MT5_AVAILABLE:
+            logger.warning("MetaTrader5 not available - using mock data for testing")
+        
     def connect(self) -> bool:
         """
         Connect to MetaTrader 5
@@ -39,13 +111,18 @@ class MT5DataSource:
             bool: True if connection successful
         """
         try:
+            if not MT5_AVAILABLE:
+                logger.info("Running in simulation mode (MT5 not available)")
+                self.connected = True
+                return True
+            
             if not mt5.initialize():
-                logger.error(f"MT5 initialization failed: {mt5.last_error()}")
+                logger.error(f"MT5 initialization failed")
                 return False
                 
             if self.login and self.password and self.server:
                 if not mt5.login(self.login, self.password, self.server):
-                    logger.error(f"MT5 login failed: {mt5.last_error()}")
+                    logger.error(f"MT5 login failed")
                     return False
                     
             self.connected = True

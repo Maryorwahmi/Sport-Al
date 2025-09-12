@@ -1,0 +1,288 @@
+{
+  "performance_metrics": {
+    "total_trades": 10,
+    "winning_trades": 5,
+    "losing_trades": 5,
+    "win_rate": 0.5,
+    "total_pnl": 2055.4900000000002,
+    "total_pnl_pips": 424.29999999999967,
+    "max_drawdown": 600.1699999999964,
+    "max_drawdown_pct": 6.001699999999964,
+    "avg_win": 630.1399999999998,
+    "avg_loss": 219.0419999999996,
+    "avg_win_pips": 132.5799999999999,
+    "avg_loss_pips": 47.719999999999985,
+    "profit_factor": 2.876799883127441,
+    "sharpe_ratio": 0.3583966968241143,
+    "recovery_factor": 3.4248462935501816,
+    "largest_win": 688.3999999999985,
+    "largest_loss": 252.00000000000372,
+    "consecutive_wins": 1,
+    "consecutive_losses": 1,
+    "avg_trade_duration": "4 days 05:12:00"
+  },
+  "trades": [
+    {
+      "entry_time": "2025-08-15T18:20:54.118008",
+      "exit_time": "2025-08-29T21:20:54.118008",
+      "signal_type": "buy",
+      "entry_price": 0.80262,
+      "exit_price": 0.81466,
+      "stop_loss": 0.79861,
+      "take_profit": 0.81466,
+      "size": 0.5,
+      "pnl": 598.5000000000025,
+      "pnl_pips": 120.4000000000005,
+      "commission": 3.5e-05,
+      "status": "target_hit",
+      "exit_reason": "Take profit hit"
+    },
+    {
+      "entry_time": "2025-08-18T11:20:54.118008",
+      "exit_time": "2025-08-28T19:20:54.118008",
+      "signal_type": "sell",
+      "entry_price": 0.80012,
+      "exit_price": 0.80412,
+      "stop_loss": 0.80412,
+      "take_profit": 0.78812,
+      "size": 0.5,
+      "pnl": -203.49999999999463,
+      "pnl_pips": -39.99999999999893,
+      "commission": 3.5e-05,
+      "status": "stopped_out",
+      "exit_reason": "Stop loss hit"
+    },
+    {
+      "entry_time": "2025-08-21T04:20:54.118008",
+      "exit_time": "2025-08-29T16:20:54.118008",
+      "signal_type": "buy",
+      "entry_price": 0.80013,
+      "exit_price": 0.81213,
+      "stop_loss": 0.79613,
+      "take_profit": 0.81213,
+      "size": 0.5,
+      "pnl": 596.5000000000006,
+      "pnl_pips": 120.00000000000011,
+      "commission": 3.5e-05,
+      "status": "target_hit",
+      "exit_reason": "Take profit hit"
+    },
+    {
+      "entry_time": "2025-08-23T21:20:54.118008",
+      "exit_time": "2025-08-28T19:20:54.118008",
+      "signal_type": "sell",
+      "entry_price": 0.80002,
+      "exit_price": 0.80402,
+      "stop_loss": 0.80402,
+      "take_profit": 0.78802,
+      "size": 0.5,
+      "pnl": -203.50000000000017,
+      "pnl_pips": -40.000000000000036,
+      "commission": 3.5e-05,
+      "status": "stopped_out",
+      "exit_reason": "Stop loss hit"
+    },
+    {
+      "entry_time": "2025-08-26T14:20:54.118008",
+      "exit_time": "2025-08-29T16:20:54.118008",
+      "signal_type": "buy",
+      "entry_price": 0.79995,
+      "exit_price": 0.81195,
+      "stop_loss": 0.79595,
+      "take_profit": 0.81195,
+      "size": 0.5,
+      "pnl": 596.499999999995,
+      "pnl_pips": 119.99999999999899,
+      "commission": 3.5e-05,
+      "status": "target_hit",
+      "exit_reason": "Take profit hit"
+    },
+    {
+      "entry_time": "2025-08-29T07:20:54.118008",
+      "exit_time": "2025-08-29T15:20:54.118008",
+      "signal_type": "sell",
+      "entry_price": 0.80767,
+      "exit_price": 0.81171,
+      "stop_loss": 0.81171,
+      "take_profit": 0.79555,
+      "size": 0.47,
+      "pnl": -193.17000000000203,
+      "pnl_pips": -40.40000000000043,
+      "commission": 3.289999999999999e-05,
+      "status": "stopped_out",
+      "exit_reason": "Stop loss hit"
+    },
+    {
+      "entry_time": "2025-09-01T00:20:54.118008",
+      "exit_time": "2025-09-01T10:20:54.118008",
+      "signal_type": "buy",
+      "entry_price": 0.8644,
+      "exit_price": 0.87737,
+      "stop_loss": 0.86008,
+      "take_profit": 0.87737,
+      "size": 0.52,
+      "pnl": 670.8000000000019,
+      "pnl_pips": 129.70000000000036,
+      "commission": 3.64e-05,
+      "status": "target_hit",
+      "exit_reason": "Take profit hit"
+    },
+    {
+      "entry_time": "2025-09-03T17:20:54.118008",
+      "exit_time": "2025-09-03T20:20:54.118008",
+      "signal_type": "sell",
+      "entry_price": 0.9788,
+      "exit_price": 0.98369,
+      "stop_loss": 0.98369,
+      "take_profit": 0.96412,
+      "size": 0.49,
+      "pnl": -243.03999999999752,
+      "pnl_pips": -48.8999999999995,
+      "commission": 3.4299999999999993e-05,
+      "status": "stopped_out",
+      "exit_reason": "Stop loss hit"
+    },
+    {
+      "entry_time": "2025-09-06T10:20:54.118008",
+      "exit_time": "2025-09-06T16:20:54.118008",
+      "signal_type": "buy",
+      "entry_price": 1.1518,
+      "exit_price": 1.16908,
+      "stop_loss": 1.14604,
+      "take_profit": 1.16908,
+      "size": 0.4,
+      "pnl": 688.3999999999985,
+      "pnl_pips": 172.7999999999996,
+      "commission": 2.8e-05,
+      "status": "target_hit",
+      "exit_reason": "Take profit hit"
+    },
+    {
+      "entry_time": "2025-09-09T03:20:54.118008",
+      "exit_time": "2025-09-09T05:20:54.118008",
+      "signal_type": "sell",
+      "entry_price": 1.38505,
+      "exit_price": 1.39198,
+      "stop_loss": 1.39198,
+      "take_profit": 1.36427,
+      "size": 0.36,
+      "pnl": -252.00000000000372,
+      "pnl_pips": -69.30000000000103,
+      "commission": 2.5199999999999996e-05,
+      "status": "stopped_out",
+      "exit_reason": "Stop loss hit"
+    }
+  ],
+  "equity_curve": [
+    {
+      "timestamp": "2025-08-13 01:20:54.118008",
+      "balance": 10000.0,
+      "trade_pnl": 0,
+      "cumulative_pnl": 0.0
+    },
+    {
+      "timestamp": "2025-08-17 05:20:54.118008",
+      "balance": 10000.0,
+      "trade_pnl": 0,
+      "cumulative_pnl": 0.0
+    },
+    {
+      "timestamp": "2025-08-21 09:20:54.118008",
+      "balance": 10000.0,
+      "trade_pnl": 0,
+      "cumulative_pnl": 0.0
+    },
+    {
+      "timestamp": "2025-08-25 13:20:54.118008",
+      "balance": 10000.0,
+      "trade_pnl": 0,
+      "cumulative_pnl": 0.0
+    },
+    {
+      "timestamp": "2025-08-28 19:20:54.118008",
+      "balance": 9796.500000000005,
+      "trade_pnl": -203.49999999999463,
+      "cumulative_pnl": -203.49999999999454
+    },
+    {
+      "timestamp": "2025-08-28 19:20:54.118008",
+      "balance": 9593.000000000005,
+      "trade_pnl": -203.50000000000017,
+      "cumulative_pnl": -406.99999999999454
+    },
+    {
+      "timestamp": "2025-08-29 15:20:54.118008",
+      "balance": 9399.830000000004,
+      "trade_pnl": -193.17000000000203,
+      "cumulative_pnl": -600.1699999999964
+    },
+    {
+      "timestamp": "2025-08-29 16:20:54.118008",
+      "balance": 9996.330000000004,
+      "trade_pnl": 596.5000000000006,
+      "cumulative_pnl": -3.669999999996435
+    },
+    {
+      "timestamp": "2025-08-29 16:20:54.118008",
+      "balance": 10592.829999999998,
+      "trade_pnl": 596.499999999995,
+      "cumulative_pnl": 592.8299999999981
+    },
+    {
+      "timestamp": "2025-08-29 17:20:54.118008",
+      "balance": 10592.829999999998,
+      "trade_pnl": 0,
+      "cumulative_pnl": 592.8299999999981
+    },
+    {
+      "timestamp": "2025-08-29 21:20:54.118008",
+      "balance": 11191.33,
+      "trade_pnl": 598.5000000000025,
+      "cumulative_pnl": 1191.33
+    },
+    {
+      "timestamp": "2025-09-01 10:20:54.118008",
+      "balance": 11862.130000000001,
+      "trade_pnl": 670.8000000000019,
+      "cumulative_pnl": 1862.130000000001
+    },
+    {
+      "timestamp": "2025-09-02 21:20:54.118008",
+      "balance": 11862.130000000001,
+      "trade_pnl": 0,
+      "cumulative_pnl": 1862.130000000001
+    },
+    {
+      "timestamp": "2025-09-03 20:20:54.118008",
+      "balance": 11619.090000000004,
+      "trade_pnl": -243.03999999999752,
+      "cumulative_pnl": 1619.0900000000038
+    },
+    {
+      "timestamp": "2025-09-06 16:20:54.118008",
+      "balance": 12307.490000000002,
+      "trade_pnl": 688.3999999999985,
+      "cumulative_pnl": 2307.4900000000016
+    },
+    {
+      "timestamp": "2025-09-07 01:20:54.118008",
+      "balance": 12307.490000000002,
+      "trade_pnl": 0,
+      "cumulative_pnl": 2307.4900000000016
+    },
+    {
+      "timestamp": "2025-09-09 05:20:54.118008",
+      "balance": 12055.489999999998,
+      "trade_pnl": -252.00000000000372,
+      "cumulative_pnl": 2055.489999999998
+    },
+    {
+      "timestamp": "2025-09-11 05:20:54.118008",
+      "balance": 12055.489999999998,
+      "trade_pnl": 0,
+      "cumulative_pnl": 2055.489999999998
+    }
+  ],
+  "final_balance": 12055.489999999998,
+  "total_return": 20.55489999999998
+}
