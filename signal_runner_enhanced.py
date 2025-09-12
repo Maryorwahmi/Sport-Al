@@ -24,12 +24,12 @@ from smc_forez.analyzer import SMCAnalyzer
 from smc_forez.config.settings import Settings, Timeframe
 from smc_forez.signals.signal_generator import SignalType, SignalStrength
 
-# Configure logging
+# Configure logging with UTF-8 encoding
 logging.basicConfig(
     level=logging.INFO, 
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('signal_runner_enhanced.log'),
+        logging.FileHandler('signal_runner_enhanced.log', encoding='utf-8'),
         logging.StreamHandler()
     ]
 )
@@ -37,65 +37,83 @@ logger = logging.getLogger(__name__)
 
 
 class SignalQualityFilter:
-    """Enhanced signal quality filtering using real SMC analysis results"""
+    """Enhanced signal quality filtering using real SMC analysis results with 70%+ standard"""
     
-    def __init__(self, min_confidence: float = 0.65, min_rr_ratio: float = 1.8):
-        self.min_confidence = min_confidence
-        self.min_rr_ratio = min_rr_ratio
+    def __init__(self, min_confidence: float = 0.70, min_rr_ratio: float = 2.5):
+        self.min_confidence = min_confidence  # ENHANCED to 70%
+        self.min_rr_ratio = min_rr_ratio      # ENHANCED to 2.5 RR
         self.signal_history = {}
+        self.min_confluence_factors = 3       # NEW: Minimum confluence factors
     
     def evaluate_signal_quality(self, signal: Dict, analysis: Dict) -> float:
         """
-        Evaluate signal quality based on real SMC analysis
+        Enhanced signal quality evaluation with 70%+ standard
         
         Args:
             signal: Signal dictionary from SMC analyzer
             analysis: Multi-timeframe analysis results
             
         Returns:
-            Quality score (0-1, higher is better)
+            Quality score (0-1, higher is better, 0.70+ required for execution)
         """
         score = 0.0
         
-        # Base signal strength (30% weight)
+        # Base signal strength (25% weight) - ENHANCED scoring
         signal_strength = signal.get('signal_strength', SignalStrength.WEAK)
-        if signal_strength == SignalStrength.STRONG:
-            score += 0.30
-        elif signal_strength == SignalStrength.MODERATE:
+        if signal_strength == SignalStrength.VERY_STRONG:
+            score += 0.25
+        elif signal_strength == SignalStrength.STRONG:
             score += 0.20
-        else:
+        elif signal_strength == SignalStrength.MODERATE:
             score += 0.10
+        else:
+            score += 0.05  # Weak signals heavily penalized
         
-        # Confluence factors (25% weight)
+        # Confluence factors (30% weight) - ENHANCED requirements
         confluence_score = signal.get('confluence_score', 0)
-        score += min(0.25, confluence_score / 10 * 0.25)
+        if confluence_score >= self.min_confluence_factors:
+            score += min(0.30, (confluence_score / 5) * 0.30)  # Scale to 5 max factors
+        else:
+            score += 0.05  # Penalty for insufficient confluence
         
-        # Multi-timeframe alignment (25% weight)
+        # Multi-timeframe alignment (25% weight) - ENHANCED standards
         recommendation = analysis.get('recommendation', {})
         confidence = recommendation.get('confidence', 'LOW')
-        if confidence == 'HIGH':
+        trend_alignment = analysis.get('trend_alignment', {})
+        alignment_score = len([v for v in trend_alignment.values() if v == 'aligned'])
+        
+        if confidence == 'HIGH' and alignment_score >= 3:
             score += 0.25
-        elif confidence == 'MODERATE':
+        elif confidence == 'HIGH' and alignment_score >= 2:
+            score += 0.20
+        elif confidence == 'MODERATE' and alignment_score >= 2:
             score += 0.15
         else:
             score += 0.05
         
-        # Risk-reward ratio (20% weight)
+        # Risk-reward ratio (20% weight) - ENHANCED requirements
         rr_ratio = signal.get('risk_reward_ratio', 1.0)
-        score += min(0.20, (rr_ratio / 3.0) * 0.20)
+        if rr_ratio >= 3.0:
+            score += 0.20
+        elif rr_ratio >= 2.5:
+            score += 0.15
+        elif rr_ratio >= 2.0:
+            score += 0.10
+        else:
+            score += 0.05
         
         return min(1.0, score)
     
     def filter_signals(self, signals_with_analysis: List[tuple], symbol: str) -> List[Dict]:
         """
-        Filter signals based on quality and remove duplicates
+        Enhanced signal filtering with 70%+ quality standard
         
         Args:
             signals_with_analysis: List of (signal, analysis) tuples
             symbol: Currency pair symbol
             
         Returns:
-            List of high-quality signals
+            List of high-quality signals meeting 70%+ standard
         """
         filtered_signals = []
         
@@ -106,28 +124,77 @@ class SignalQualityFilter:
             # Calculate quality score
             quality_score = self.evaluate_signal_quality(signal, analysis)
             
-            # Apply filters
-            if (quality_score >= 0.5 and  # Minimum quality threshold
-                signal.get('risk_reward_ratio', 0) >= self.min_rr_ratio):
+            # Apply ENHANCED filters with 70% standard
+            if (quality_score >= 0.70 and  # ENHANCED: 70% minimum quality threshold
+                signal.get('risk_reward_ratio', 0) >= self.min_rr_ratio and
+                signal.get('confluence_score', 0) >= self.min_confluence_factors):
                 
-                # Add quality metadata
-                enhanced_signal = signal.copy()
-                enhanced_signal.update({
-                    'symbol': symbol,
-                    'quality_score': round(quality_score, 3),
-                    'analysis_timestamp': datetime.now(),
-                    'timeframe_alignment': analysis.get('trend_alignment', {}),
-                    'signal_confluence': analysis.get('signal_confluence', {}),
-                    'recommendation_confidence': analysis.get('recommendation', {}).get('confidence', 'LOW')
-                })
+                # Additional pattern and structure validation
+                pattern_valid = self._validate_pattern_structure(signal, analysis)
                 
-                filtered_signals.append(enhanced_signal)
+                if pattern_valid:
+                    # Add quality metadata
+                    enhanced_signal = signal.copy()
+                    enhanced_signal.update({
+                        'symbol': symbol,
+                        'quality_score': round(quality_score, 3),
+                        'analysis_timestamp': datetime.now(),
+                        'timeframe_alignment': analysis.get('trend_alignment', {}),
+                        'signal_confluence': analysis.get('signal_confluence', {}),
+                        'grade': self._get_signal_grade(quality_score),
+                        'validation_passed': True
+                    })
+                    
+                    filtered_signals.append(enhanced_signal)
         
-        # Sort by quality score
-        filtered_signals.sort(key=lambda x: x['quality_score'], reverse=True)
+        return filtered_signals
+    
+    def _validate_pattern_structure(self, signal: Dict, analysis: Dict) -> bool:
+        """
+        Validate pattern and structure requirements for enhanced quality
         
-        # Limit to top signals per symbol
-        return filtered_signals[:3]  # Max 3 signals per symbol
+        Args:
+            signal: Signal dictionary
+            analysis: Analysis results
+            
+        Returns:
+            True if pattern and structure validation passes
+        """
+        # Check for required market structure elements
+        structure_analysis = analysis.get('structure_analysis', {})
+        
+        # Require BOS or significant structure pattern
+        has_bos = structure_analysis.get('bos_detected', False)
+        has_pattern = structure_analysis.get('pattern_detected', False)
+        pattern_strength = structure_analysis.get('pattern_strength', 0.0)
+        
+        # Enhanced validation criteria
+        structure_valid = has_bos or (has_pattern and pattern_strength >= 0.75)
+        
+        # Check momentum alignment if available
+        momentum_data = analysis.get('momentum_analysis', {})
+        momentum_aligned = momentum_data.get('aligned', True)  # Default to True if not available
+        
+        return structure_valid and momentum_aligned
+    
+    def _get_signal_grade(self, quality_score: float) -> str:
+        """
+        Get signal grade based on quality score
+        
+        Args:
+            quality_score: Quality score (0-1)
+            
+        Returns:
+            Signal grade string
+        """
+        if quality_score >= 0.90:
+            return "INSTITUTIONAL"
+        elif quality_score >= 0.80:
+            return "PROFESSIONAL"
+        elif quality_score >= 0.70:
+            return "STANDARD"
+        else:
+            return "BELOW_STANDARD"
 
 
 class EnhancedSignalRunner:
@@ -218,7 +285,7 @@ class EnhancedSignalRunner:
                 
                 opportunities.append((signal, analysis))
                 
-                logger.info(f"✓ Real signal generated for {symbol}: {action.upper()} @ {entry_details.get('entry_price', 0):.5f}")
+                logger.info(f"[SIGNAL] Real signal generated for {symbol}: {action.upper()} @ {entry_details.get('entry_price', 0):.5f}")
             
             return opportunities
             
@@ -252,7 +319,7 @@ class EnhancedSignalRunner:
                     all_signals.extend(quality_signals)
                     
                     for signal in quality_signals:
-                        logger.info(f"✓ Quality signal for {symbol}: {signal['signal_type'].value.upper()} "
+                        logger.info(f"[OK] Quality signal for {symbol}: {signal['signal_type'].value.upper()} "
                                   f"@ {signal['entry_price']:.5f} (Quality: {signal['quality_score']:.2f})")
                 
                 processed_count += 1
@@ -264,7 +331,7 @@ class EnhancedSignalRunner:
                 logger.error(f"Error processing {symbol}: {str(e)}")
                 continue
         
-        logger.info(f"✓ {len(all_signals)} high-quality signals generated using real SMC analysis")
+        logger.info(f"[OK] {len(all_signals)} high-quality signals generated using real SMC analysis")
         return all_signals
     
     def save_signals(self, signals: List[Dict], filename: Optional[str] = None) -> str:
@@ -306,7 +373,7 @@ class EnhancedSignalRunner:
         with open(filepath, 'w') as f:
             json.dump(serializable_signals, f, indent=2, default=str)
         
-        logger.info(f"✓ Signals saved to: {filepath}")
+        logger.info(f"[OK] Signals saved to: {filepath}")
         return str(filepath)
     
     def print_signal_summary(self, signals: List[Dict]):
