@@ -37,32 +37,39 @@ class AnalysisSettings:
 @dataclass
 class QualitySettings:
     """Signal quality analysis configuration"""
-    # Quality score thresholds
-    min_institutional_score: float = 85.0  # 85-100 institutional grade
-    min_professional_score: float = 70.0   # 70-84 professional grade
-    min_execution_score: float = 55.0      # 55+ minimum for execution
+    # Quality score thresholds - ENHANCED for 70%+ standard
+    min_institutional_score: float = 90.0  # 90-100 institutional grade
+    min_professional_score: float = 75.0   # 75-89 professional grade  
+    min_execution_score: float = 70.0      # 70+ minimum for execution (ENHANCED)
     
     # Multi-timeframe weights
-    htf_weight: float = 0.4     # Higher timeframe weight (40%)
+    htf_weight: float = 0.45    # Higher timeframe weight (45% - INCREASED)
     mtf_weight: float = 0.35    # Mid timeframe weight (35%)
-    ltf_weight: float = 0.25    # Lower timeframe weight (25%)
+    ltf_weight: float = 0.20    # Lower timeframe weight (20% - DECREASED)
     
-    # Confluence factor weights (0-100 scale)
-    trend_weight: float = 25.0        # Trend alignment weight
-    structure_weight: float = 20.0    # Structure break weight
-    orderblock_weight: float = 15.0   # Order block weight
-    liquidity_weight: float = 20.0    # Liquidity zone weight
-    fvg_weight: float = 10.0          # Fair value gap weight
-    supply_demand_weight: float = 10.0 # Supply/demand zone weight
+    # Confluence factor weights (0-100 scale) - ENHANCED requirements
+    trend_weight: float = 30.0        # Trend alignment weight (INCREASED)
+    structure_weight: float = 25.0    # Structure break weight (INCREASED)
+    orderblock_weight: float = 20.0   # Order block weight (INCREASED)
+    liquidity_weight: float = 15.0    # Liquidity zone weight (DECREASED)
+    fvg_weight: float = 5.0           # Fair value gap weight (DECREASED)
+    supply_demand_weight: float = 5.0  # Supply/demand zone weight (DECREASED)
     
-    # Risk management thresholds
-    min_rr_ratio: float = 2.0         # Minimum risk:reward ratio
-    max_risk_percentage: float = 0.02  # Maximum 2% risk per trade
+    # Risk management thresholds - ENHANCED
+    min_rr_ratio: float = 2.5         # Minimum risk:reward ratio (INCREASED)
+    max_risk_percentage: float = 0.015 # Maximum 1.5% risk per trade (DECREASED)
+    min_confluence_factors: int = 3    # Minimum confluence factors required (NEW)
     
-    # Execution filters
+    # Execution filters - ENHANCED
     allowed_sessions: List[str] = field(default_factory=lambda: ['london', 'newyork', 'overlap'])
-    max_concurrent_trades: int = 5
-    duplicate_time_window: int = 4  # Hours to check for duplicates
+    max_concurrent_trades: int = 3     # Reduced for quality (DECREASED)
+    duplicate_time_window: int = 6     # Hours to check for duplicates (INCREASED)
+    
+    # Pattern and structure requirements - NEW
+    require_pattern_confirmation: bool = True
+    require_structure_break: bool = True
+    require_momentum_alignment: bool = True
+    min_pattern_strength: float = 0.75  # 75% pattern strength minimum
     
     # Enable/disable quality analysis
     enable_quality_analysis: bool = True

@@ -58,29 +58,42 @@ class PerformanceMetrics:
 
 
 class BacktestEngine:
-    """Backtesting engine for SMC Forex strategies"""
+    """Enhanced backtesting engine aligned with live SMC signal generation"""
     
     def __init__(self, initial_balance: float = 10000.0, commission: float = 0.00007,
-                 risk_per_trade: float = 0.01, max_spread: float = 2.0):
+                 risk_per_trade: float = 0.015, max_spread: float = 2.0, 
+                 min_signal_quality: float = 0.70):
         """
-        Initialize backtesting engine
+        Initialize enhanced backtesting engine
         
         Args:
             initial_balance: Starting account balance
             commission: Commission per trade (in decimal, e.g., 0.00007 = 0.7 pips)
-            risk_per_trade: Risk per trade as percentage of balance
+            risk_per_trade: Risk per trade as percentage of balance (ENHANCED to 1.5%)
             max_spread: Maximum spread to accept trades (in pips)
+            min_signal_quality: Minimum signal quality score for execution (70%+)
         """
         self.initial_balance = initial_balance
         self.commission = commission
         self.risk_per_trade = risk_per_trade
         self.max_spread = max_spread
+        self.min_signal_quality = min_signal_quality
         
         # Initialize tracking variables
         self.current_balance = initial_balance
         self.trades: List[Trade] = []
         self.equity_curve: List[Dict] = []
         self.open_trades: List[Trade] = []
+        
+        # Enhanced tracking for signal quality analysis
+        self.signal_quality_stats = {
+            'institutional_signals': 0,
+            'professional_signals': 0, 
+            'standard_signals': 0,
+            'below_standard_signals': 0,
+            'quality_wins': {},
+            'quality_losses': {}
+        }
         
     def calculate_position_size(self, entry_price: float, stop_loss: float) -> float:
         """
@@ -117,11 +130,11 @@ class BacktestEngine:
     
     def enter_trade(self, timestamp: datetime, signal: Dict, current_data: Dict) -> Optional[Trade]:
         """
-        Enter a new trade based on signal
+        Enhanced trade entry with signal quality validation
         
         Args:
             timestamp: Current timestamp
-            signal: Signal dictionary with entry details
+            signal: Enhanced signal dictionary with quality metrics
             current_data: Current market data (bid, ask, spread)
             
         Returns:
@@ -129,6 +142,12 @@ class BacktestEngine:
         """
         try:
             if not signal.get('valid', False):
+                return None
+            
+            # Enhanced quality validation
+            quality_score = signal.get('quality_score', 0.0)
+            if quality_score < self.min_signal_quality:
+                logger.debug(f"Signal quality {quality_score:.2f} below threshold {self.min_signal_quality}")
                 return None
             
             signal_type = signal.get('signal_type', SignalType.WAIT)
@@ -141,10 +160,30 @@ class BacktestEngine:
                 logger.debug(f"Spread too wide: {spread} pips")
                 return None
             
-            # Get trade parameters
-            entry_price = signal.get('entry_price', current_data.get('bid', 0))
-            stop_loss = signal.get('stop_loss', 0)
-            take_profit = signal.get('take_profit', 0)
+            # Enhanced validation: check for required confluence factors
+            confluence_score = signal.get('confluence_score', 0)
+            if confluence_score < 3:  # Minimum 3 confluence factors
+                logger.debug(f"Insufficient confluence factors: {confluence_score}")
+                return None
+            
+            # Enhanced validation: check pattern validation
+            pattern_validations = signal.get('pattern_validations', {})
+            valid_patterns = [p for p in pattern_validations.values() if p.get('valid', False)]
+            if not valid_patterns:
+                logger.debug("No valid patterns detected")
+                return None
+            
+            # Get trade parameters from enhanced signal
+            entry_details = signal.get('entry_details', {})
+            entry_price = entry_details.get('entry_price', current_data.get('bid', 0))
+            stop_loss = entry_details.get('stop_loss', 0)
+            take_profit = entry_details.get('take_profit', 0)
+            risk_reward_ratio = entry_details.get('risk_reward_ratio', 0)
+            
+            # Enhanced validation: ensure minimum RR ratio
+            if risk_reward_ratio < 2.5:  # Enhanced minimum RR
+                logger.debug(f"Risk/reward ratio {risk_reward_ratio:.2f} below minimum 2.5")
+                return None
             
             if not all([entry_price, stop_loss, take_profit]):
                 logger.warning("Missing trade parameters")
@@ -153,7 +192,11 @@ class BacktestEngine:
             # Calculate position size
             position_size = self.calculate_position_size(entry_price, stop_loss)
             
-            # Create trade
+            # Track signal quality statistics
+            signal_grade = signal.get('grade', 'STANDARD')
+            self._update_signal_quality_stats(signal_grade)
+            
+            # Create enhanced trade
             trade = Trade(
                 entry_time=timestamp,
                 exit_time=None,
@@ -166,15 +209,28 @@ class BacktestEngine:
                 commission=self.commission * position_size
             )
             
+            # Add enhanced trade metadata
+            trade.signal_quality = quality_score
+            trade.signal_grade = signal_grade
+            trade.confluence_score = confluence_score
+            trade.pattern_types = [p.get('entry_type', 'unknown') for p in valid_patterns]
+            trade.entry_strategy = signal.get('entry_strategy', 'confluence_entry')
+            
             self.trades.append(trade)
             self.open_trades.append(trade)
             
-            logger.info(f"Entered {signal_type.value} trade at {entry_price} (Size: {position_size})")
+            logger.info(f"Entered {signal_type.value} trade at {entry_price} (Quality: {quality_score:.2f}, Size: {position_size})")
             return trade
             
         except Exception as e:
             logger.error(f"Error entering trade: {str(e)}")
             return None
+    
+    def _update_signal_quality_stats(self, signal_grade: str):
+        """Update signal quality statistics"""
+        grade_key = signal_grade.lower() + '_signals'
+        if grade_key in self.signal_quality_stats:
+            self.signal_quality_stats[grade_key] += 1
     
     def update_trades(self, timestamp: datetime, current_data: Dict):
         """
@@ -420,7 +476,11 @@ class BacktestEngine:
             # Recovery factor
             recovery_factor = total_pnl / max_drawdown if max_drawdown > 0 else 0
             
-            return PerformanceMetrics(
+            # Enhanced quality-based performance metrics
+            quality_metrics = self._calculate_quality_metrics(closed_trades)
+            
+            # Create enhanced performance metrics
+            metrics = PerformanceMetrics(
                 total_trades=total_trades,
                 winning_trades=winning_trades,
                 losing_trades=losing_trades,
@@ -443,9 +503,38 @@ class BacktestEngine:
                 avg_trade_duration=avg_trade_duration
             )
             
+            # Add quality metrics as additional attributes
+            metrics.quality_breakdown = quality_metrics
+            metrics.signal_quality_stats = self.signal_quality_stats
+            
+            return metrics
+            
         except Exception as e:
             logger.error(f"Error calculating performance metrics: {str(e)}")
             return PerformanceMetrics()
+    
+    def _calculate_quality_metrics(self, closed_trades: List[Trade]) -> Dict:
+        """Calculate performance metrics by signal quality grade"""
+        quality_metrics = {}
+        
+        for grade in ['INSTITUTIONAL', 'PROFESSIONAL', 'STANDARD', 'BELOW_STANDARD']:
+            grade_trades = [t for t in closed_trades if getattr(t, 'signal_grade', 'STANDARD') == grade]
+            
+            if grade_trades:
+                grade_wins = [t for t in grade_trades if t.pnl > 0]
+                grade_win_rate = len(grade_wins) / len(grade_trades)
+                grade_total_pnl = sum(t.pnl for t in grade_trades)
+                grade_avg_pnl = grade_total_pnl / len(grade_trades)
+                
+                quality_metrics[grade] = {
+                    'trades': len(grade_trades),
+                    'win_rate': grade_win_rate,
+                    'total_pnl': grade_total_pnl,
+                    'avg_pnl_per_trade': grade_avg_pnl,
+                    'avg_quality_score': np.mean([getattr(t, 'signal_quality', 0.7) for t in grade_trades])
+                }
+        
+        return quality_metrics
     
     def _calculate_drawdown(self) -> Tuple[float, float]:
         """Calculate maximum drawdown"""
