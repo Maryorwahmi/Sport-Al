@@ -9,6 +9,7 @@ import os
 import argparse
 from datetime import datetime
 from pathlib import Path
+import pandas as pd
 
 # Add project to path
 project_root = os.path.dirname(os.path.abspath(__file__))
@@ -315,7 +316,6 @@ Examples:
         if args.mode == 'live':
             run_live_mode(args.symbols, args.execute)
         elif args.mode == 'backtest':
-            import pandas as pd  # Import here to avoid dependency issues
             run_backtest_mode(args.symbol, args.timeframe, args.days)
         elif args.mode == 'analyze':
             run_analysis_mode(args.symbols)

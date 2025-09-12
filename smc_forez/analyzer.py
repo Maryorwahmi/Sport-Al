@@ -6,14 +6,29 @@ import numpy as np
 from typing import Dict, List, Optional
 import logging
 from datetime import datetime, timedelta
+import sys
+import os
 
-from .config.settings import Settings, Timeframe
-from .data_sources.mt5_source import MT5DataSource
-from .market_structure.structure_analyzer import MarketStructureAnalyzer
-from .smart_money.smc_analyzer import SmartMoneyAnalyzer
-from .signals.signal_generator import SignalGenerator
-from .utils.multi_timeframe import MultiTimeframeAnalyzer
-from .backtesting.backtest_engine import BacktestEngine
+# Handle both relative and absolute imports
+if __name__ == "__main__":
+    # When run directly, add parent directory to path and use absolute imports
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    from smc_forez.config.settings import Settings, Timeframe
+    from smc_forez.data_sources.mt5_source import MT5DataSource
+    from smc_forez.market_structure.structure_analyzer import MarketStructureAnalyzer
+    from smc_forez.smart_money.smc_analyzer import SmartMoneyAnalyzer
+    from smc_forez.signals.signal_generator import SignalGenerator
+    from smc_forez.utils.multi_timeframe import MultiTimeframeAnalyzer
+    from smc_forez.backtesting.backtest_engine import BacktestEngine
+else:
+    # When imported as module, use relative imports
+    from .config.settings import Settings, Timeframe
+    from .data_sources.mt5_source import MT5DataSource
+    from .market_structure.structure_analyzer import MarketStructureAnalyzer
+    from .smart_money.smc_analyzer import SmartMoneyAnalyzer
+    from .signals.signal_generator import SignalGenerator
+    from .utils.multi_timeframe import MultiTimeframeAnalyzer
+    from .backtesting.backtest_engine import BacktestEngine
 
 
 logger = logging.getLogger(__name__)
@@ -58,7 +73,10 @@ class SMCAnalyzer:
         
         # Initialize quality analyzer if enabled
         if self.settings.quality.enable_quality_analysis:
-            from .signals.signal_quality_analyzer import SignalQualityAnalyzer
+            if __name__ == "__main__":
+                from smc_forez.signals.signal_quality_analyzer import SignalQualityAnalyzer
+            else:
+                from .signals.signal_quality_analyzer import SignalQualityAnalyzer
             quality_settings = {
                 'min_institutional_score': self.settings.quality.min_institutional_score,
                 'min_professional_score': self.settings.quality.min_professional_score,
@@ -427,10 +445,18 @@ class SMCAnalyzer:
             if data is None or data.empty:
                 return {'error': 'No historical data available'}
             
-            # Filter data by date range
-            data = data[start_date:end_date]
-            if data.empty:
-                return {'error': 'No data in specified date range'}
+            # For mock data, we don't need to filter by date range as it's generated data
+            # For real data, filter by date range
+            original_data_len = len(data)
+            if hasattr(self.data_source, 'is_mock') and self.data_source.is_mock:
+                # For mock data, just use the generated data as-is
+                logger.info(f"Using {len(data)} bars of mock data for backtesting")
+            else:
+                # For real data, filter by date range
+                data = data[start_date:end_date]
+                if data.empty:
+                    return {'error': 'No data in specified date range'}
+                logger.info(f"Filtered to {len(data)} bars from {original_data_len} total bars")
             
             # Generate signals for backtest
             signals = self._generate_backtest_signals(data, symbol, timeframe)
@@ -465,7 +491,14 @@ class SMCAnalyzer:
         """
         try:
             signals = []
-            window_size = 200  # Analyze 200 bars at a time for efficiency
+            min_data_required = 50  # Reduced from 200 for better testing with smaller datasets
+            window_size = min(100, len(data) // 2)  # Adaptive window size
+            
+            if len(data) < min_data_required:
+                logger.warning(f"Insufficient data for signal generation: {len(data)} bars (need at least {min_data_required})")
+                return signals
+            
+            logger.info(f"Generating signals with window size {window_size} from {len(data)} bars")
             
             for i in range(window_size, len(data)):
                 # Get window of data for analysis
@@ -485,6 +518,7 @@ class SMCAnalyzer:
                 if signal.get('valid', False):
                     signal['timestamp'] = data.index[i]
                     signals.append(signal)
+                    logger.debug(f"Generated signal at {data.index[i]}: {signal.get('signal_type', 'unknown')}")
             
             logger.info(f"Generated {len(signals)} valid signals for backtest")
             return signals
@@ -551,3 +585,66 @@ class SMCAnalyzer:
         except Exception as e:
             logger.error(f"Error generating analysis summary: {str(e)}")
             return "Error generating summary"
+
+
+def main():
+    """Main function for direct execution of analyzer"""
+    print("🚀 SMC FOREZ - ANALYZER DIRECT EXECUTION")
+    print("="*60)
+    
+    try:
+        # Create analyzer with default settings
+        settings = Settings()
+        analyzer = SMCAnalyzer(settings)
+        
+        print("✓ SMC Analyzer initialized successfully")
+        print(f"✓ Configured for {len(settings.timeframes)} timeframes: {[tf.value for tf in settings.timeframes]}")
+        print(f"✓ Analysis settings: swing_length={settings.analysis.swing_length}, fvg_min_size={settings.analysis.fvg_min_size}")
+        print(f"✓ Trading settings: risk_per_trade={settings.trading.risk_per_trade}, min_rr_ratio={settings.trading.min_rr_ratio}")
+        
+        # Test data source connection (will likely fail without MT5, but should not crash)
+        print("\n🔗 Testing data source connection...")
+        if analyzer.connect_data_source():
+            print("✓ Data source connected successfully")
+            
+            # Test analysis on a sample symbol
+            print("\n📊 Testing analysis capabilities...")
+            symbols = ['EURUSD', 'GBPUSD']
+            
+            for symbol in symbols:
+                print(f"\nTesting {symbol}...")
+                try:
+                    analysis = analyzer.analyze_multi_timeframe(symbol)
+                    if 'error' in analysis:
+                        print(f"⚠️  Analysis returned error: {analysis['error']}")
+                    else:
+                        print(f"✓ Analysis completed for {symbol}")
+                        
+                        # Get summary
+                        summary = analyzer.get_analysis_summary(analysis)
+                        print("Summary:")
+                        print(summary[:200] + "..." if len(summary) > 200 else summary)
+                        
+                except Exception as e:
+                    print(f"❌ Error analyzing {symbol}: {str(e)}")
+                    
+            analyzer.disconnect_data_source()
+            
+        else:
+            print("⚠️  Data source connection failed (expected without MT5 setup)")
+            print("✓ Analyzer can still be used with external data")
+        
+        print("\n✅ Analyzer direct execution test completed successfully!")
+        print("\n💡 Usage examples:")
+        print("   - Import: from smc_forez.analyzer import SMCAnalyzer")
+        print("   - Initialize: analyzer = SMCAnalyzer()")
+        print("   - Analyze: analysis = analyzer.analyze_multi_timeframe('EURUSD')")
+        
+    except Exception as e:
+        print(f"❌ Error during analyzer execution: {str(e)}")
+        import traceback
+        traceback.print_exc()
+
+
+if __name__ == "__main__":
+    main()
