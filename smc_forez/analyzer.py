@@ -52,8 +52,35 @@ class SMCAnalyzer:
         
         self.signal_generator = SignalGenerator(
             min_confluence_factors=2,
-            min_rr_ratio=self.settings.trading.min_rr_ratio
+            min_rr_ratio=self.settings.trading.min_rr_ratio,
+            enhanced_mode=self.settings.quality.enable_quality_analysis
         )
+        
+        # Initialize quality analyzer if enabled
+        if self.settings.quality.enable_quality_analysis:
+            from .signals.signal_quality_analyzer import SignalQualityAnalyzer
+            quality_settings = {
+                'min_institutional_score': self.settings.quality.min_institutional_score,
+                'min_professional_score': self.settings.quality.min_professional_score,
+                'min_execution_score': self.settings.quality.min_execution_score,
+                'htf_weight': self.settings.quality.htf_weight,
+                'mtf_weight': self.settings.quality.mtf_weight,
+                'ltf_weight': self.settings.quality.ltf_weight,
+                'trend_weight': self.settings.quality.trend_weight,
+                'structure_weight': self.settings.quality.structure_weight,
+                'orderblock_weight': self.settings.quality.orderblock_weight,
+                'liquidity_weight': self.settings.quality.liquidity_weight,
+                'fvg_weight': self.settings.quality.fvg_weight,
+                'supply_demand_weight': self.settings.quality.supply_demand_weight,
+                'min_rr_ratio': self.settings.quality.min_rr_ratio,
+                'max_risk_percentage': self.settings.quality.max_risk_percentage,
+                'allowed_sessions': self.settings.quality.allowed_sessions,
+                'max_concurrent_trades': self.settings.quality.max_concurrent_trades,
+                'duplicate_time_window': self.settings.quality.duplicate_time_window
+            }
+            self.quality_analyzer = SignalQualityAnalyzer(quality_settings)
+        else:
+            self.quality_analyzer = None
         
         self.multi_timeframe_analyzer = MultiTimeframeAnalyzer(
             timeframes=self.settings.timeframes,
@@ -131,7 +158,7 @@ class SMCAnalyzer:
             # Generate signals
             current_price = data['Close'].iloc[-1]
             signal = self.signal_generator.generate_signal(
-                market_structure, smc_analysis, current_price
+                market_structure, smc_analysis, current_price, timeframe
             )
             
             return {
@@ -187,14 +214,111 @@ class SMCAnalyzer:
             logger.error(f"Error in multi-timeframe analysis: {str(e)}")
             return {'error': str(e)}
     
+    def analyze_institutional_grade_signal(self, symbol: str, 
+                                         timeframes: Optional[List[Timeframe]] = None) -> Dict:
+        """
+        Perform institutional-grade signal analysis with quality validation
+        
+        Args:
+            symbol: Currency pair symbol
+            timeframes: List of timeframes for multi-timeframe analysis
+            
+        Returns:
+            Dictionary with institutional-grade signal analysis
+        """
+        try:
+            logger.info(f"Institutional-grade analysis for {symbol}")
+            
+            if not self.quality_analyzer:
+                logger.warning("Quality analyzer not initialized. Using standard analysis.")
+                return self.analyze_multi_timeframe(symbol, timeframes)
+            
+            timeframes = timeframes or self.settings.timeframes
+            
+            # Step 1: Perform multi-timeframe analysis
+            timeframe_analyses = {}
+            for tf in timeframes:
+                single_analysis = self.analyze_single_timeframe(symbol, tf)
+                if 'error' not in single_analysis:
+                    timeframe_analyses[tf] = single_analysis
+            
+            if not timeframe_analyses:
+                return {'error': 'No valid timeframe data available'}
+            
+            # Step 2: Get primary signal from lower timeframe
+            primary_tf = min(timeframes, key=lambda tf: self._get_timeframe_minutes(tf))
+            primary_signal = timeframe_analyses[primary_tf]['signal']
+            
+            # Step 3: Perform quality analysis
+            quality_report = self.quality_analyzer.analyze_signal_quality(
+                primary_signal, timeframe_analyses, symbol
+            )
+            
+            # Step 4: Generate structured logging
+            if self.settings.quality.enable_logging:
+                self._log_signal_decision(quality_report, symbol)
+            
+            return {
+                'symbol': symbol,
+                'analysis_timestamp': pd.Timestamp.now(),
+                'timeframes_analyzed': [tf.value for tf in timeframes],
+                'primary_signal': primary_signal,
+                'quality_report': quality_report,
+                'timeframe_analyses': timeframe_analyses,
+                'institutional_grade': quality_report.get('should_execute', False)
+            }
+            
+        except Exception as e:
+            logger.error(f"Error in institutional-grade analysis: {str(e)}")
+            return {'error': str(e)}
+    
+    def _get_timeframe_minutes(self, timeframe: Timeframe) -> int:
+        """Convert timeframe to minutes for sorting"""
+        minutes_map = {
+            Timeframe.M1: 1,
+            Timeframe.M5: 5,
+            Timeframe.M15: 15,
+            Timeframe.H1: 60,
+            Timeframe.H4: 240,
+            Timeframe.D1: 1440
+        }
+        return minutes_map.get(timeframe, 60)
+    
+    def _log_signal_decision(self, quality_report: Dict, symbol: str):
+        """Log signal decision with structured format"""
+        try:
+            import json
+            from datetime import datetime
+            
+            log_entry = {
+                'timestamp': datetime.now().isoformat(),
+                'symbol': symbol,
+                'decision': 'EXECUTE' if quality_report.get('should_execute', False) else 'REJECT',
+                'total_score': quality_report.get('total_quality_score', 0),
+                'quality_grade': quality_report.get('quality_grade', 'unknown'),
+                'signal_type': quality_report.get('signal_summary', {}).get('type', 'unknown'),
+                'entry_price': quality_report.get('signal_summary', {}).get('entry_price', 0),
+                'reasoning': quality_report.get('decision_reasoning', [])
+            }
+            
+            # Log to console
+            logger.info(f"SIGNAL DECISION: {json.dumps(log_entry, indent=2)}")
+            
+            # Optionally save to file (can be enhanced with CSV/JSON file logging)
+            
+        except Exception as e:
+            logger.error(f"Error logging signal decision: {str(e)}")
+    
     def get_current_opportunities(self, symbols: List[str], 
-                                 timeframes: Optional[List[Timeframe]] = None) -> List[Dict]:
+                                 timeframes: Optional[List[Timeframe]] = None,
+                                 use_quality_analysis: bool = True) -> List[Dict]:
         """
         Scan multiple symbols for current trading opportunities
         
         Args:
             symbols: List of currency pair symbols to scan
             timeframes: List of timeframes to analyze
+            use_quality_analysis: Use institutional-grade quality analysis
             
         Returns:
             List of trading opportunities
@@ -207,36 +331,58 @@ class SMCAnalyzer:
             
             for symbol in symbols:
                 try:
-                    # Perform multi-timeframe analysis
-                    analysis = self.analyze_multi_timeframe(symbol, timeframes)
-                    
-                    if 'error' not in analysis:
-                        recommendation = analysis.get('recommendation', {})
+                    # Use institutional-grade analysis if quality analyzer is available
+                    if use_quality_analysis and self.quality_analyzer:
+                        analysis = self.analyze_institutional_grade_signal(symbol, timeframes)
                         
-                        # Check if there's a valid trading opportunity
-                        if (recommendation.get('confidence') in ['HIGH', 'MODERATE'] and
-                            recommendation.get('action').value != 'wait'):
+                        if 'error' not in analysis and analysis.get('institutional_grade', False):
+                            quality_report = analysis.get('quality_report', {})
                             
                             opportunities.append({
                                 'symbol': symbol,
-                                'recommendation': recommendation,
                                 'analysis_timestamp': analysis.get('analysis_timestamp'),
-                                'trend_alignment': analysis.get('trend_alignment'),
-                                'signal_confluence': analysis.get('signal_confluence')
+                                'quality_score': quality_report.get('total_quality_score', 0),
+                                'quality_grade': quality_report.get('quality_grade', 'unknown'),
+                                'signal_summary': quality_report.get('signal_summary', {}),
+                                'should_execute': quality_report.get('should_execute', False),
+                                'decision_reasoning': quality_report.get('decision_reasoning', []),
+                                'analysis_type': 'institutional_grade'
                             })
+                    else:
+                        # Fallback to standard multi-timeframe analysis
+                        analysis = self.analyze_multi_timeframe(symbol, timeframes)
+                        
+                        if 'error' not in analysis:
+                            recommendation = analysis.get('recommendation', {})
+                            
+                            # Check if there's a valid trading opportunity
+                            if (recommendation.get('confidence') in ['HIGH', 'MODERATE'] and
+                                recommendation.get('action').value != 'wait'):
+                                
+                                opportunities.append({
+                                    'symbol': symbol,
+                                    'recommendation': recommendation,
+                                    'analysis_timestamp': analysis.get('analysis_timestamp'),
+                                    'trend_alignment': analysis.get('trend_alignment'),
+                                    'signal_confluence': analysis.get('signal_confluence'),
+                                    'analysis_type': 'standard'
+                                })
                             
                 except Exception as e:
                     logger.warning(f"Error analyzing {symbol}: {str(e)}")
                     continue
             
-            # Sort by confidence and signal strength
-            opportunities.sort(
-                key=lambda x: (
-                    x['recommendation'].get('strength_score', 0),
-                    x['recommendation'].get('confidence') == 'HIGH'
-                ),
-                reverse=True
-            )
+            # Sort opportunities by quality score (institutional) or confidence (standard)
+            def sort_key(x):
+                if x.get('analysis_type') == 'institutional_grade':
+                    return (x.get('quality_score', 0), x.get('should_execute', False))
+                else:
+                    return (
+                        x.get('recommendation', {}).get('strength_score', 0),
+                        x.get('recommendation', {}).get('confidence') == 'HIGH'
+                    )
+            
+            opportunities.sort(key=sort_key, reverse=True)
             
             logger.info(f"Found {len(opportunities)} trading opportunities")
             return opportunities

@@ -39,16 +39,19 @@ class ConfluenceFactor(Enum):
 class SignalGenerator:
     """Generates trading signals based on confluence of multiple factors"""
     
-    def __init__(self, min_confluence_factors: int = 2, min_rr_ratio: float = 1.5):
+    def __init__(self, min_confluence_factors: int = 2, min_rr_ratio: float = 1.5, 
+                 enhanced_mode: bool = True):
         """
         Initialize signal generator
         
         Args:
             min_confluence_factors: Minimum number of confluence factors required
             min_rr_ratio: Minimum risk/reward ratio for signals
+            enhanced_mode: Enable enhanced signal generation with quality analysis
         """
         self.min_confluence_factors = min_confluence_factors
         self.min_rr_ratio = min_rr_ratio
+        self.enhanced_mode = enhanced_mode
         
     def calculate_confluence_score(self, market_structure: Dict, smc_analysis: Dict,
                                   current_price: float) -> Dict:
@@ -191,7 +194,7 @@ class SignalGenerator:
             return {'confluence_factors': [], 'total_score': 0, 'factor_count': 0}
     
     def generate_signal(self, market_structure: Dict, smc_analysis: Dict,
-                       current_price: float) -> Dict:
+                       current_price: float, timeframe: Optional = None) -> Dict:
         """
         Generate trading signal based on confluence analysis
         
@@ -199,6 +202,7 @@ class SignalGenerator:
             market_structure: Market structure analysis results
             smc_analysis: Smart Money Concepts analysis results
             current_price: Current market price
+            timeframe: Optional timeframe for enhanced analysis
             
         Returns:
             Dictionary with signal information
@@ -235,6 +239,9 @@ class SignalGenerator:
             # Calculate entry, stop loss, and take profit levels
             entry_levels = self._calculate_entry_levels(signal_type, confluence, current_price)
             
+            # Enhanced confidence calculation
+            confidence = self._calculate_signal_confidence(confluence, entry_levels, market_structure)
+            
             signal = {
                 'timestamp': pd.Timestamp.now(),
                 'signal_type': signal_type,
@@ -246,7 +253,9 @@ class SignalGenerator:
                 'stop_loss': entry_levels.get('stop_loss'),
                 'take_profit': entry_levels.get('take_profit'),
                 'risk_reward_ratio': entry_levels.get('rr_ratio'),
-                'valid': entry_levels.get('rr_ratio', 0) >= self.min_rr_ratio
+                'confidence': confidence,
+                'timeframe': timeframe.value if timeframe else None,
+                'valid': entry_levels.get('rr_ratio', 0) >= self.min_rr_ratio and confidence >= 0.5
             }
             
             return signal
@@ -256,6 +265,7 @@ class SignalGenerator:
             return {
                 'signal_type': SignalType.WAIT,
                 'signal_strength': SignalStrength.WEAK,
+                'confidence': 0.0,
                 'valid': False
             }
     
@@ -344,6 +354,50 @@ class SignalGenerator:
         except Exception as e:
             logger.error(f"Error calculating entry levels: {str(e)}")
             return {}
+    
+    def _calculate_signal_confidence(self, confluence: Dict, entry_levels: Dict, 
+                                   market_structure: Dict) -> float:
+        """
+        Calculate signal confidence based on multiple factors
+        
+        Args:
+            confluence: Confluence analysis results
+            entry_levels: Entry, SL, TP levels
+            market_structure: Market structure analysis
+            
+        Returns:
+            Confidence score (0.0 - 1.0)
+        """
+        try:
+            confidence_factors = []
+            
+            # Factor 1: Number of confluence factors (0-0.3)
+            factor_count = confluence.get('factor_count', 0)
+            factor_confidence = min(0.3, factor_count * 0.05)
+            confidence_factors.append(factor_confidence)
+            
+            # Factor 2: Total confluence score (0-0.3)
+            total_score = confluence.get('total_score', 0)
+            score_confidence = min(0.3, total_score * 0.03)
+            confidence_factors.append(score_confidence)
+            
+            # Factor 3: Risk-reward ratio (0-0.2)
+            rr_ratio = entry_levels.get('rr_ratio', 0)
+            rr_confidence = min(0.2, rr_ratio * 0.05) if rr_ratio >= self.min_rr_ratio else 0
+            confidence_factors.append(rr_confidence)
+            
+            # Factor 4: Trend alignment (0-0.2)
+            trend = market_structure.get('trend_direction', TrendDirection.CONSOLIDATION)
+            trend_confidence = 0.2 if trend != TrendDirection.CONSOLIDATION else 0.05
+            confidence_factors.append(trend_confidence)
+            
+            # Calculate total confidence
+            total_confidence = sum(confidence_factors)
+            return min(1.0, max(0.0, total_confidence))
+            
+        except Exception as e:
+            logger.error(f"Error calculating signal confidence: {str(e)}")
+            return 0.0
     
     def get_signal_summary(self, signal: Dict) -> str:
         """
