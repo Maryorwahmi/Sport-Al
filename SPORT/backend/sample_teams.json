@@ -1,0 +1,162 @@
+[
+  {
+    "id": 1,
+    "name": "Arsenal",
+    "sport": "Soccer",
+    "league": "Premier League",
+    "country": "Netherlands",
+    "founded": 1886
+  },
+  {
+    "id": 2,
+    "name": "Chelsea",
+    "sport": "Soccer",
+    "league": "Ligue 1",
+    "country": "England",
+    "founded": 1949
+  },
+  {
+    "id": 3,
+    "name": "Manchester United",
+    "sport": "Soccer",
+    "league": "Scottish Premier League",
+    "country": "Netherlands",
+    "founded": 1977
+  },
+  {
+    "id": 4,
+    "name": "Liverpool",
+    "sport": "Soccer",
+    "league": "La Liga",
+    "country": "Netherlands",
+    "founded": 1963
+  },
+  {
+    "id": 5,
+    "name": "Manchester City",
+    "sport": "Soccer",
+    "league": "La Liga",
+    "country": "Italy",
+    "founded": 1926
+  },
+  {
+    "id": 6,
+    "name": "Tottenham",
+    "sport": "Soccer",
+    "league": "Scottish Premier League",
+    "country": "Germany",
+    "founded": 1916
+  },
+  {
+    "id": 7,
+    "name": "Real Madrid",
+    "sport": "Soccer",
+    "league": "Ligue 1",
+    "country": "Spain",
+    "founded": 1890
+  },
+  {
+    "id": 8,
+    "name": "Barcelona",
+    "sport": "Soccer",
+    "league": "Bundesliga",
+    "country": "Germany",
+    "founded": 1873
+  },
+  {
+    "id": 9,
+    "name": "Bayern Munich",
+    "sport": "Soccer",
+    "league": "La Liga",
+    "country": "Spain",
+    "founded": 1923
+  },
+  {
+    "id": 10,
+    "name": "PSG",
+    "sport": "Soccer",
+    "league": "Serie A",
+    "country": "Spain",
+    "founded": 1905
+  },
+  {
+    "id": 11,
+    "name": "Juventus",
+    "sport": "Soccer",
+    "league": "Serie A",
+    "country": "England",
+    "founded": 1887
+  },
+  {
+    "id": 12,
+    "name": "AC Milan",
+    "sport": "Soccer",
+    "league": "Primeira Liga",
+    "country": "Netherlands",
+    "founded": 1977
+  },
+  {
+    "id": 13,
+    "name": "Inter Milan",
+    "sport": "Soccer",
+    "league": "Scottish Premier League",
+    "country": "Spain",
+    "founded": 1887
+  },
+  {
+    "id": 14,
+    "name": "Atletico Madrid",
+    "sport": "Soccer",
+    "league": "Primeira Liga",
+    "country": "France",
+    "founded": 1894
+  },
+  {
+    "id": 15,
+    "name": "Borussia Dortmund",
+    "sport": "Soccer",
+    "league": "Scottish Premier League",
+    "country": "Portugal",
+    "founded": 1923
+  },
+  {
+    "id": 16,
+    "name": "Ajax",
+    "sport": "Soccer",
+    "league": "Ligue 1",
+    "country": "Scotland",
+    "founded": 1893
+  },
+  {
+    "id": 17,
+    "name": "Porto",
+    "sport": "Soccer",
+    "league": "La Liga",
+    "country": "Scotland",
+    "founded": 1969
+  },
+  {
+    "id": 18,
+    "name": "Benfica",
+    "sport": "Soccer",
+    "league": "Scottish Premier League",
+    "country": "Netherlands",
+    "founded": 1978
+  },
+  {
+    "id": 19,
+    "name": "Celtic",
+    "sport": "Soccer",
+    "league": "Eredivisie",
+    "country": "England",
+    "founded": 1973
+  },
+  {
+    "id": 20,
+    "name": "Rangers",
+    "sport": "Soccer",
+    "league": "Serie A",
+    "country": "Netherlands",
+    "founded": 1986
+  }
+]

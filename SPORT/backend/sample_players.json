@@ -1,0 +1,802 @@
+[
+  {
+    "id": 1,
+    "name": "Sadio Heung-min",
+    "position": "Goalkeeper",
+    "team_id": 1,
+    "nationality": "Netherlands",
+    "birth_date": "2000-06-04 19:41:15.741792"
+  },
+  {
+    "id": 2,
+    "name": "Virgil Kane",
+    "position": "Goalkeeper",
+    "team_id": 1,
+    "nationality": "Netherlands",
+    "birth_date": "1994-09-15 19:41:15.741803"
+  },
+  {
+    "id": 3,
+    "name": "Raheem Alexander-Arnold",
+    "position": "Midfielder",
+    "team_id": 1,
+    "nationality": "Netherlands",
+    "birth_date": "1992-12-13 19:41:15.741807"
+  },
+  {
+    "id": 4,
+    "name": "Marcus Alexander-Arnold",
+    "position": "Goalkeeper",
+    "team_id": 1,
+    "nationality": "Netherlands",
+    "birth_date": "1995-06-09 19:41:15.741810"
+  },
+  {
+    "id": 5,
+    "name": "Virgil Sancho",
+    "position": "Goalkeeper",
+    "team_id": 1,
+    "nationality": "Netherlands",
+    "birth_date": "2006-05-14 19:41:15.741812"
+  },
+  {
+    "id": 6,
+    "name": "Raheem Lacazette",
+    "position": "Goalkeeper",
+    "team_id": 2,
+    "nationality": "England",
+    "birth_date": "1998-07-18 19:41:15.741816"
+  },
+  {
+    "id": 7,
+    "name": "Gareth Pogba",
+    "position": "Midfielder",
+    "team_id": 2,
+    "nationality": "England",
+    "birth_date": "1999-11-14 19:41:15.741818"
+  },
+  {
+    "id": 8,
+    "name": "Kevin Grealish",
+    "position": "Forward",
+    "team_id": 2,
+    "nationality": "England",
+    "birth_date": "2000-04-26 19:41:15.741821"
+  },
+  {
+    "id": 9,
+    "name": "Kevin Lacazette",
+    "position": "Defender",
+    "team_id": 2,
+    "nationality": "England",
+    "birth_date": "2005-03-12 19:41:15.741823"
+  },
+  {
+    "id": 10,
+    "name": "Virgil Rashford",
+    "position": "Defender",
+    "team_id": 2,
+    "nationality": "England",
+    "birth_date": "1995-10-22 19:41:15.741825"
+  },
+  {
+    "id": 11,
+    "name": "N'Golo Pogba",
+    "position": "Midfielder",
+    "team_id": 3,
+    "nationality": "Netherlands",
+    "birth_date": "1996-06-23 19:41:15.741830"
+  },
+  {
+    "id": 12,
+    "name": "Virgil Sancho",
+    "position": "Forward",
+    "team_id": 3,
+    "nationality": "Netherlands",
+    "birth_date": "2005-06-14 19:41:15.741833"
+  },
+  {
+    "id": 13,
+    "name": "N'Golo Fernandes",
+    "position": "Defender",
+    "team_id": 3,
+    "nationality": "Netherlands",
+    "birth_date": "1997-06-01 19:41:15.741835"
+  },
+  {
+    "id": 14,
+    "name": "Pierre Pogba",
+    "position": "Forward",
+    "team_id": 3,
+    "nationality": "Netherlands",
+    "birth_date": "1992-08-01 19:41:15.741837"
+  },
+  {
+    "id": 15,
+    "name": "Marcus Sancho",
+    "position": "Midfielder",
+    "team_id": 3,
+    "nationality": "Netherlands",
+    "birth_date": "2001-08-26 19:41:15.741840"
+  },
+  {
+    "id": 16,
+    "name": "Son Aubameyang",
+    "position": "Midfielder",
+    "team_id": 4,
+    "nationality": "Netherlands",
+    "birth_date": "1999-06-26 19:41:15.741842"
+  },
+  {
+    "id": 17,
+    "name": "Son Robertson",
+    "position": "Goalkeeper",
+    "team_id": 4,
+    "nationality": "Netherlands",
+    "birth_date": "1990-11-27 19:41:15.741845"
+  },
+  {
+    "id": 18,
+    "name": "Trent Kante",
+    "position": "Midfielder",
+    "team_id": 4,
+    "nationality": "Netherlands",
+    "birth_date": "2001-06-11 19:41:15.741848"
+  },
+  {
+    "id": 19,
+    "name": "Raheem Salah",
+    "position": "Goalkeeper",
+    "team_id": 4,
+    "nationality": "Netherlands",
+    "birth_date": "1992-03-27 19:41:15.741850"
+  },
+  {
+    "id": 20,
+    "name": "Bruno Alexander-Arnold",
+    "position": "Defender",
+    "team_id": 4,
+    "nationality": "Netherlands",
+    "birth_date": "2003-01-05 19:41:15.741852"
+  },
+  {
+    "id": 21,
+    "name": "Marcus Robertson",
+    "position": "Forward",
+    "team_id": 5,
+    "nationality": "Italy",
+    "birth_date": "1993-08-10 19:41:15.741855"
+  },
+  {
+    "id": 22,
+    "name": "Alexandre Aubameyang",
+    "position": "Forward",
+    "team_id": 5,
+    "nationality": "Italy",
+    "birth_date": "2007-05-14 19:41:15.741857"
+  },
+  {
+    "id": 23,
+    "name": "Mohamed Pogba",
+    "position": "Forward",
+    "team_id": 5,
+    "nationality": "Italy",
+    "birth_date": "2001-06-23 19:41:15.741860"
+  },
+  {
+    "id": 24,
+    "name": "Jadon Mane",
+    "position": "Defender",
+    "team_id": 5,
+    "nationality": "Italy",
+    "birth_date": "2006-03-09 19:41:15.741862"
+  },
+  {
+    "id": 25,
+    "name": "Jadon Aubameyang",
+    "position": "Midfielder",
+    "team_id": 5,
+    "nationality": "Italy",
+    "birth_date": "1995-06-26 19:41:15.741865"
+  },
+  {
+    "id": 26,
+    "name": "Pierre Kane",
+    "position": "Goalkeeper",
+    "team_id": 6,
+    "nationality": "Germany",
+    "birth_date": "1996-05-01 19:41:15.741868"
+  },
+  {
+    "id": 27,
+    "name": "Marcus Foden",
+    "position": "Defender",
+    "team_id": 6,
+    "nationality": "Germany",
+    "birth_date": "1997-11-03 19:41:15.741870"
+  },
+  {
+    "id": 28,
+    "name": "Christian Foden",
+    "position": "Midfielder",
+    "team_id": 6,
+    "nationality": "Germany",
+    "birth_date": "2004-05-16 19:41:15.741872"
+  },
+  {
+    "id": 29,
+    "name": "Alexandre Pogba",
+    "position": "Forward",
+    "team_id": 6,
+    "nationality": "Germany",
+    "birth_date": "1998-10-19 19:41:15.741875"
+  },
+  {
+    "id": 30,
+    "name": "Harry Sterling",
+    "position": "Goalkeeper",
+    "team_id": 6,
+    "nationality": "Germany",
+    "birth_date": "1994-02-17 19:41:15.741877"
+  },
+  {
+    "id": 31,
+    "name": "Bruno Foden",
+    "position": "Forward",
+    "team_id": 7,
+    "nationality": "Spain",
+    "birth_date": "1993-06-09 19:41:15.741884"
+  },
+  {
+    "id": 32,
+    "name": "Jack Grealish",
+    "position": "Forward",
+    "team_id": 7,
+    "nationality": "Spain",
+    "birth_date": "1998-10-29 19:41:15.741886"
+  },
+  {
+    "id": 33,
+    "name": "Virgil Foden",
+    "position": "Forward",
+    "team_id": 7,
+    "nationality": "Spain",
+    "birth_date": "2004-05-12 19:41:15.741889"
+  },
+  {
+    "id": 34,
+    "name": "Christian Grealish",
+    "position": "Goalkeeper",
+    "team_id": 7,
+    "nationality": "Spain",
+    "birth_date": "2001-07-25 19:41:15.741891"
+  },
+  {
+    "id": 35,
+    "name": "Andy De Bruyne",
+    "position": "Forward",
+    "team_id": 7,
+    "nationality": "Spain",
+    "birth_date": "2005-02-15 19:41:15.741894"
+  },
+  {
+    "id": 36,
+    "name": "Harry Salah",
+    "position": "Goalkeeper",
+    "team_id": 8,
+    "nationality": "Germany",
+    "birth_date": "2006-08-27 19:41:15.741896"
+  },
+  {
+    "id": 37,
+    "name": "Jadon Salah",
+    "position": "Goalkeeper",
+    "team_id": 8,
+    "nationality": "Germany",
+    "birth_date": "1994-05-15 19:41:15.741899"
+  },
+  {
+    "id": 38,
+    "name": "Mohamed Heung-min",
+    "position": "Defender",
+    "team_id": 8,
+    "nationality": "Germany",
+    "birth_date": "2007-06-17 19:41:15.741901"
+  },
+  {
+    "id": 39,
+    "name": "Sadio De Bruyne",
+    "position": "Forward",
+    "team_id": 8,
+    "nationality": "Germany",
+    "birth_date": "1998-07-06 19:41:15.741903"
+  },
+  {
+    "id": 40,
+    "name": "Andy Heung-min",
+    "position": "Defender",
+    "team_id": 8,
+    "nationality": "Germany",
+    "birth_date": "2003-06-24 19:41:15.741906"
+  },
+  {
+    "id": 41,
+    "name": "Christian Heung-min",
+    "position": "Defender",
+    "team_id": 9,
+    "nationality": "Spain",
+    "birth_date": "1991-03-17 19:41:15.741908"
+  },
+  {
+    "id": 42,
+    "name": "Bruno Lacazette",
+    "position": "Midfielder",
+    "team_id": 9,
+    "nationality": "Spain",
+    "birth_date": "2001-07-31 19:41:15.741911"
+  },
+  {
+    "id": 43,
+    "name": "Andy Kante",
+    "position": "Goalkeeper",
+    "team_id": 9,
+    "nationality": "Spain",
+    "birth_date": "2007-08-07 19:41:15.741913"
+  },
+  {
+    "id": 44,
+    "name": "Mohamed Alexander-Arnold",
+    "position": "Goalkeeper",
+    "team_id": 9,
+    "nationality": "Spain",
+    "birth_date": "1997-06-23 19:41:15.741918"
+  },
+  {
+    "id": 45,
+    "name": "Mohamed Grealish",
+    "position": "Midfielder",
+    "team_id": 9,
+    "nationality": "Spain",
+    "birth_date": "2001-07-17 19:41:15.741921"
+  },
+  {
+    "id": 46,
+    "name": "Trent Robertson",
+    "position": "Midfielder",
+    "team_id": 10,
+    "nationality": "Spain",
+    "birth_date": "1995-06-20 19:41:15.741923"
+  },
+  {
+    "id": 47,
+    "name": "Jack Kane",
+    "position": "Forward",
+    "team_id": 10,
+    "nationality": "Spain",
+    "birth_date": "1991-02-01 19:41:15.741926"
+  },
+  {
+    "id": 48,
+    "name": "Gareth Aubameyang",
+    "position": "Midfielder",
+    "team_id": 10,
+    "nationality": "Spain",
+    "birth_date": "1991-03-07 19:41:15.741929"
+  },
+  {
+    "id": 49,
+    "name": "Christian Lacazette",
+    "position": "Goalkeeper",
+    "team_id": 10,
+    "nationality": "Spain",
+    "birth_date": "1992-04-20 19:41:15.741931"
+  },
+  {
+    "id": 50,
+    "name": "Pierre Mane",
+    "position": "Goalkeeper",
+    "team_id": 10,
+    "nationality": "Spain",
+    "birth_date": "1997-12-17 19:41:15.741936"
+  },
+  {
+    "id": 51,
+    "name": "Phil Aubameyang",
+    "position": "Forward",
+    "team_id": 11,
+    "nationality": "England",
+    "birth_date": "2006-08-01 19:41:15.741938"
+  },
+  {
+    "id": 52,
+    "name": "Kevin Grealish",
+    "position": "Midfielder",
+    "team_id": 11,
+    "nationality": "England",
+    "birth_date": "1994-05-27 19:41:15.741941"
+  },
+  {
+    "id": 53,
+    "name": "Pierre Pogba",
+    "position": "Defender",
+    "team_id": 11,
+    "nationality": "England",
+    "birth_date": "1994-09-01 19:41:15.741943"
+  },
+  {
+    "id": 54,
+    "name": "Kevin Salah",
+    "position": "Midfielder",
+    "team_id": 11,
+    "nationality": "England",
+    "birth_date": "1991-07-08 19:41:15.741946"
+  },
+  {
+    "id": 55,
+    "name": "Phil Kane",
+    "position": "Defender",
+    "team_id": 11,
+    "nationality": "England",
+    "birth_date": "2006-10-21 19:41:15.741948"
+  },
+  {
+    "id": 56,
+    "name": "Andy Mane",
+    "position": "Midfielder",
+    "team_id": 12,
+    "nationality": "Netherlands",
+    "birth_date": "1996-09-09 19:41:15.741951"
+  },
+  {
+    "id": 57,
+    "name": "Trent Pulisic",
+    "position": "Forward",
+    "team_id": 12,
+    "nationality": "Netherlands",
+    "birth_date": "1999-10-24 19:41:15.741953"
+  },
+  {
+    "id": 58,
+    "name": "Son De Bruyne",
+    "position": "Midfielder",
+    "team_id": 12,
+    "nationality": "Netherlands",
+    "birth_date": "2004-09-27 19:41:15.741956"
+  },
+  {
+    "id": 59,
+    "name": "Gareth Pogba",
+    "position": "Defender",
+    "team_id": 12,
+    "nationality": "Netherlands",
+    "birth_date": "1997-11-02 19:41:15.741958"
+  },
+  {
+    "id": 60,
+    "name": "Gareth Mane",
+    "position": "Defender",
+    "team_id": 12,
+    "nationality": "Netherlands",
+    "birth_date": "1992-02-17 19:41:15.741960"
+  },
+  {
+    "id": 61,
+    "name": "Marcus Rashford",
+    "position": "Defender",
+    "team_id": 13,
+    "nationality": "Spain",
+    "birth_date": "2003-04-23 19:41:15.741963"
+  },
+  {
+    "id": 62,
+    "name": "Pierre Kante",
+    "position": "Forward",
+    "team_id": 13,
+    "nationality": "Spain",
+    "birth_date": "1998-11-07 19:41:15.741965"
+  },
+  {
+    "id": 63,
+    "name": "Christian van Dijk",
+    "position": "Forward",
+    "team_id": 13,
+    "nationality": "Spain",
+    "birth_date": "2004-05-23 19:41:15.741968"
+  },
+  {
+    "id": 64,
+    "name": "Gareth Aubameyang",
+    "position": "Midfielder",
+    "team_id": 13,
+    "nationality": "Spain",
+    "birth_date": "1992-02-02 19:41:15.741976"
+  },
+  {
+    "id": 65,
+    "name": "Raheem Lacazette",
+    "position": "Forward",
+    "team_id": 13,
+    "nationality": "Spain",
+    "birth_date": "1992-06-01 19:41:15.741978"
+  },
+  {
+    "id": 66,
+    "name": "Marcus Grealish",
+    "position": "Defender",
+    "team_id": 14,
+    "nationality": "France",
+    "birth_date": "2006-09-19 19:41:15.741981"
+  },
+  {
+    "id": 67,
+    "name": "Bruno Lacazette",
+    "position": "Goalkeeper",
+    "team_id": 14,
+    "nationality": "France",
+    "birth_date": "2003-10-13 19:41:15.741984"
+  },
+  {
+    "id": 68,
+    "name": "Virgil Kane",
+    "position": "Midfielder",
+    "team_id": 14,
+    "nationality": "France",
+    "birth_date": "2005-05-03 19:41:15.741986"
+  },
+  {
+    "id": 69,
+    "name": "Alexandre Salah",
+    "position": "Forward",
+    "team_id": 14,
+    "nationality": "France",
+    "birth_date": "1992-05-25 19:41:15.741988"
+  },
+  {
+    "id": 70,
+    "name": "Phil Pulisic",
+    "position": "Midfielder",
+    "team_id": 14,
+    "nationality": "France",
+    "birth_date": "2003-09-04 19:41:15.741993"
+  },
+  {
+    "id": 71,
+    "name": "Mohamed Mane",
+    "position": "Forward",
+    "team_id": 15,
+    "nationality": "Portugal",
+    "birth_date": "1996-05-24 19:41:15.741995"
+  },
+  {
+    "id": 72,
+    "name": "Raheem Bale",
+    "position": "Defender",
+    "team_id": 15,
+    "nationality": "Portugal",
+    "birth_date": "1993-04-15 19:41:15.741998"
+  },
+  {
+    "id": 73,
+    "name": "Alexandre Pogba",
+    "position": "Goalkeeper",
+    "team_id": 15,
+    "nationality": "Portugal",
+    "birth_date": "2003-06-22 19:41:15.742000"
+  },
+  {
+    "id": 74,
+    "name": "Mohamed Pulisic",
+    "position": "Goalkeeper",
+    "team_id": 15,
+    "nationality": "Portugal",
+    "birth_date": "1993-11-06 19:41:15.742003"
+  },
+  {
+    "id": 75,
+    "name": "Christian Foden",
+    "position": "Defender",
+    "team_id": 15,
+    "nationality": "Portugal",
+    "birth_date": "1994-03-31 19:41:15.742005"
+  },
+  {
+    "id": 76,
+    "name": "Trent Lacazette",
+    "position": "Goalkeeper",
+    "team_id": 16,
+    "nationality": "Scotland",
+    "birth_date": "2005-10-17 19:41:15.742008"
+  },
+  {
+    "id": 77,
+    "name": "Marcus Sancho",
+    "position": "Forward",
+    "team_id": 16,
+    "nationality": "Scotland",
+    "birth_date": "1991-12-26 19:41:15.742010"
+  },
+  {
+    "id": 78,
+    "name": "Kevin Pulisic",
+    "position": "Forward",
+    "team_id": 16,
+    "nationality": "Scotland",
+    "birth_date": "1995-03-17 19:41:15.742013"
+  },
+  {
+    "id": 79,
+    "name": "Phil Kante",
+    "position": "Forward",
+    "team_id": 16,
+    "nationality": "Scotland",
+    "birth_date": "1999-09-14 19:41:15.742015"
+  },
+  {
+    "id": 80,
+    "name": "Christian Rashford",
+    "position": "Forward",
+    "team_id": 16,
+    "nationality": "Scotland",
+    "birth_date": "1991-03-16 19:41:15.742018"
+  },
+  {
+    "id": 81,
+    "name": "Raheem Sterling",
+    "position": "Midfielder",
+    "team_id": 17,
+    "nationality": "Scotland",
+    "birth_date": "2007-01-30 19:41:15.742020"
+  },
+  {
+    "id": 82,
+    "name": "Virgil Aubameyang",
+    "position": "Forward",
+    "team_id": 17,
+    "nationality": "Scotland",
+    "birth_date": "2003-04-08 19:41:15.742023"
+  },
+  {
+    "id": 83,
+    "name": "Phil Salah",
+    "position": "Midfielder",
+    "team_id": 17,
+    "nationality": "Scotland",
+    "birth_date": "2001-06-10 19:41:15.742025"
+  },
+  {
+    "id": 84,
+    "name": "Son Alexander-Arnold",
+    "position": "Forward",
+    "team_id": 17,
+    "nationality": "Scotland",
+    "birth_date": "2006-07-03 19:41:15.742028"
+  },
+  {
+    "id": 85,
+    "name": "Sadio Aubameyang",
+    "position": "Goalkeeper",
+    "team_id": 17,
+    "nationality": "Scotland",
+    "birth_date": "2006-04-24 19:41:15.742030"
+  },
+  {
+    "id": 86,
+    "name": "Mohamed Sterling",
+    "position": "Forward",
+    "team_id": 18,
+    "nationality": "Netherlands",
+    "birth_date": "2003-01-02 19:41:15.742032"
+  },
+  {
+    "id": 87,
+    "name": "Paul Aubameyang",
+    "position": "Goalkeeper",
+    "team_id": 18,
+    "nationality": "Netherlands",
+    "birth_date": "1998-04-06 19:41:15.742035"
+  },
+  {
+    "id": 88,
+    "name": "Phil Pogba",
+    "position": "Defender",
+    "team_id": 18,
+    "nationality": "Netherlands",
+    "birth_date": "1991-04-15 19:41:15.742037"
+  },
+  {
+    "id": 89,
+    "name": "Paul Heung-min",
+    "position": "Midfielder",
+    "team_id": 18,
+    "nationality": "Netherlands",
+    "birth_date": "1995-11-26 19:41:15.742041"
+  },
+  {
+    "id": 90,
+    "name": "Jadon Aubameyang",
+    "position": "Midfielder",
+    "team_id": 18,
+    "nationality": "Netherlands",
+    "birth_date": "1993-02-21 19:41:15.742044"
+  },
+  {
+    "id": 91,
+    "name": "Christian Kane",
+    "position": "Midfielder",
+    "team_id": 19,
+    "nationality": "England",
+    "birth_date": "1993-07-24 19:41:15.742047"
+  },
+  {
+    "id": 92,
+    "name": "Gareth Aubameyang",
+    "position": "Defender",
+    "team_id": 19,
+    "nationality": "England",
+    "birth_date": "1997-03-02 19:41:15.742049"
+  },
+  {
+    "id": 93,
+    "name": "Jack Kane",
+    "position": "Defender",
+    "team_id": 19,
+    "nationality": "England",
+    "birth_date": "1998-04-06 19:41:15.742052"
+  },
+  {
+    "id": 94,
+    "name": "N'Golo Alexander-Arnold",
+    "position": "Midfielder",
+    "team_id": 19,
+    "nationality": "England",
+    "birth_date": "1993-12-18 19:41:15.742054"
+  },
+  {
+    "id": 95,
+    "name": "Raheem Salah",
+    "position": "Forward",
+    "team_id": 19,
+    "nationality": "England",
+    "birth_date": "2007-05-31 19:41:15.742059"
+  },
+  {
+    "id": 96,
+    "name": "Andy Fernandes",
+    "position": "Goalkeeper",
+    "team_id": 20,
+    "nationality": "Netherlands",
+    "birth_date": "2004-06-21 19:41:15.742061"
+  },
+  {
+    "id": 97,
+    "name": "Trent Pogba",
+    "position": "Forward",
+    "team_id": 20,
+    "nationality": "Netherlands",
+    "birth_date": "1996-09-28 19:41:15.742063"
+  },
+  {
+    "id": 98,
+    "name": "N'Golo Foden",
+    "position": "Midfielder",
+    "team_id": 20,
+    "nationality": "Netherlands",
+    "birth_date": "1995-04-02 19:41:15.742066"
+  },
+  {
+    "id": 99,
+    "name": "Trent Grealish",
+    "position": "Forward",
+    "team_id": 20,
+    "nationality": "Netherlands",
+    "birth_date": "2007-04-24 19:41:15.742068"
+  },
+  {
+    "id": 100,
+    "name": "Gareth Foden",
+    "position": "Goalkeeper",
+    "team_id": 20,
+    "nationality": "Netherlands",
+    "birth_date": "1996-01-30 19:41:15.742070"
+  }
+]
