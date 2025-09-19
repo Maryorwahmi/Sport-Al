@@ -5,7 +5,7 @@ Pydantic-based configuration with environment variable support
 
 import os
 from typing import List, Optional, Dict, Any
-from pydantic import BaseSettings, Field, validator
+from pydantic import BaseModel, Field, field_validator
 from enum import Enum
 from .constants import DEFAULT_SYMBOLS, RISK_CONSTANTS, PERFORMANCE_TARGETS
 
@@ -21,7 +21,7 @@ class TradingMode(Enum):
     PAPER_TRADING = "PAPER_TRADING"
     LIVE_TRADING = "LIVE_TRADING"
 
-class MT5Settings(BaseSettings):
+class MT5Settings(BaseModel):
     """MetaTrader 5 configuration settings"""
     
     # Auto-detect from system - no need for manual credentials
@@ -29,10 +29,7 @@ class MT5Settings(BaseSettings):
     terminal_path: Optional[str] = Field(None, description="MT5 terminal path override")
     timeout: int = Field(60, description="Connection timeout in seconds")
     
-    class Config:
-        env_prefix = "MT5_"
-
-class AnalysisSettings(BaseSettings):
+class AnalysisSettings(BaseModel):
     """Analysis configuration settings"""
     
     # Timeframe Configuration
@@ -49,10 +46,7 @@ class AnalysisSettings(BaseSettings):
     min_confluence_score: float = Field(3.0, description="Minimum confluence factors")
     min_rr_ratio: float = Field(2.0, description="Minimum risk/reward ratio")
     
-    class Config:
-        env_prefix = "ANALYSIS_"
-
-class TradingSettings(BaseSettings):
+class TradingSettings(BaseModel):
     """Trading configuration settings"""
     
     # Symbol Configuration
@@ -67,10 +61,7 @@ class TradingSettings(BaseSettings):
     # Trading Mode
     trading_mode: TradingMode = Field(TradingMode.SIGNALS_ONLY, description="Trading mode")
     
-    class Config:
-        env_prefix = "TRADING_"
-
-class QualitySettings(BaseSettings):
+class QualitySettings(BaseModel):
     """Quality analysis configuration"""
     
     # Quality Filter
@@ -82,10 +73,7 @@ class QualitySettings(BaseSettings):
     require_session_optimization: bool = Field(True, description="Require session optimization")
     preferred_sessions: List[str] = Field(["overlap", "london", "new_york"], description="Preferred sessions")
     
-    class Config:
-        env_prefix = "QUALITY_"
-
-class SessionSettings(BaseSettings):
+class SessionSettings(BaseModel):
     """Session analysis configuration"""
     
     # Session Configuration
@@ -95,10 +83,7 @@ class SessionSettings(BaseSettings):
     new_york_start: int = Field(13, description="NY session start hour (EST)")
     new_york_end: int = Field(22, description="NY session end hour (EST)")
     
-    class Config:
-        env_prefix = "SESSION_"
-
-class BacktestSettings(BaseSettings):
+class BacktestSettings(BaseModel):
     """Backtesting configuration"""
     
     # Backtest Parameters
@@ -109,10 +94,7 @@ class BacktestSettings(BaseSettings):
     # Historical Data
     history_days: int = Field(180, description="Days of historical data")
     
-    class Config:
-        env_prefix = "BACKTEST_"
-
-class MonitoringSettings(BaseSettings):
+class MonitoringSettings(BaseModel):
     """Monitoring and logging configuration"""
     
     # Logging Configuration
@@ -128,10 +110,7 @@ class MonitoringSettings(BaseSettings):
     enable_alerts: bool = Field(True, description="Enable alert system")
     alert_email: Optional[str] = Field(None, description="Alert email address")
     
-    class Config:
-        env_prefix = "MONITORING_"
-
-class APISettings(BaseSettings):
+class APISettings(BaseModel):
     """API configuration settings"""
     
     # API Configuration
@@ -146,10 +125,7 @@ class APISettings(BaseSettings):
     # Security
     api_key: Optional[str] = Field(None, description="API key for authentication")
     
-    class Config:
-        env_prefix = "API_"
-
-class Settings(BaseSettings):
+class Settings(BaseModel):
     """Main settings class combining all configuration sections"""
     
     # Core Settings
@@ -166,7 +142,7 @@ class Settings(BaseSettings):
     debug: bool = Field(False, description="Enable debug mode")
     environment: str = Field("development", description="Environment name")
     
-    @validator('trading')
+    @field_validator('trading')
     def validate_trading_settings(cls, v):
         """Validate trading settings"""
         if v.max_daily_loss > 0.1:  # 10% maximum
@@ -175,17 +151,12 @@ class Settings(BaseSettings):
             raise ValueError("Portfolio risk cannot exceed 20%")
         return v
     
-    @validator('quality')
+    @field_validator('quality')
     def validate_quality_settings(cls, v):
         """Validate quality settings"""
         if v.min_quality_score < 0.3 or v.min_quality_score > 1.0:
             raise ValueError("Quality score must be between 30% and 100%")
         return v
-    
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
-        case_sensitive = False
 
 # Factory function for easy configuration creation
 def create_settings(

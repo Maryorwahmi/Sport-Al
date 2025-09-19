@@ -14,10 +14,17 @@ __version__ = "1.0.0"
 __author__ = "AI-SMC Development Team"
 
 # Core imports for easy access
-from .analyzer import SMCAnalyzer
-from .config.settings import Settings
-from .signals.signal_generator import SignalGenerator
-from .risk_management.risk_manager import RiskManager
+try:
+    from analyzer import SMCAnalyzer
+    from config.settings import Settings
+    from signals.signal_generator import SignalGenerator
+    from risk_management.risk_manager import RiskManager
+except ImportError:
+    # Fallback for package imports
+    SMCAnalyzer = None
+    Settings = None
+    SignalGenerator = None
+    RiskManager = None
 
 __all__ = [
     'SMCAnalyzer',
