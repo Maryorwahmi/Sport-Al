@@ -65,3 +65,6 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 .npm/
+# React build
+smc-forez-react/build
+smc-forez-react/node_modules
