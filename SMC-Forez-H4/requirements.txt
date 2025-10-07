@@ -1,0 +1,16 @@
+MetaTrader5>=5.0.40
+pandas>=1.5.0
+numpy>=1.21.0
+matplotlib>=3.5.0
+scipy>=1.9.0
+plotly>=5.10.0
+yfinance>=0.1.87
+ta-lib>=0.4.0
+dataclasses-json>=0.5.7
+python-dotenv>=0.19.0
+fastapi>=0.104.1
+uvicorn[standard]>=0.24.0
+websockets>=12.0
+pydantic>=2.5.0
+python-multipart>=0.0.6
+aiofiles>=23.0.0
