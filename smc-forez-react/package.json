@@ -1,7 +1,9 @@
 {
   "name": "smc-forez-react",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "SMC Forez Trading System - React Frontend",
   "private": true,
+  "proxy": "http://localhost:3001",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
