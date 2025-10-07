@@ -594,21 +594,6 @@ class SignalGenerator:
                 return entry_price + (risk * self.min_rr_ratio)
             else:
                 return entry_price - (risk * self.min_rr_ratio)
-                # Look for liquidity above entry
-                
-        except Exception as e:
-            logger.error(f"Error calculating take profit: {e}")
-            # Emergency fallback
-            risk = abs(entry_price - stop_loss)
-            if signal_type == SignalType.BUY:
-                return entry_price + (risk * self.min_rr_ratio)
-            else:
-                return entry_price - (risk * self.min_rr_ratio)
-            risk = abs(entry_price - stop_loss)
-            if signal_type == SignalType.BUY:
-                return entry_price + (risk * self.min_rr_ratio)
-            else:
-                return entry_price - (risk * self.min_rr_ratio)
     
     def _validate_signal_direction(self, signal_type: SignalType, entry_price: float, 
                                  stop_loss: float, take_profit: float) -> bool:
