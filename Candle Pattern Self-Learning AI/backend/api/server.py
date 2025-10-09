@@ -7,6 +7,11 @@ from pydantic import BaseModel
 from typing import List, Dict, Optional
 import uvicorn
 from datetime import datetime
+import sys
+from pathlib import Path
+
+# Add parent directory to path
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from engine import TradingEngine
 from config.settings import Settings

@@ -39,7 +39,6 @@ backend/data/
 backend/models/saved_models/
 *.parquet
 *.csv
-*.json
 
 # Logs
 *.log
@@ -53,6 +52,7 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+frontend/package-lock.json
 
 # React
 frontend/build/
@@ -63,3 +63,6 @@ frontend/.env.production.local
 
 # Misc
 .cache
+
+# Test outputs
+test_output/
