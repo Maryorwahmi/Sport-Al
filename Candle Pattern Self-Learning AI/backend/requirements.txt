@@ -1,0 +1,25 @@
+# Candle Pattern Self-Learning AI - Backend Requirements
+
+# Core dependencies
+fastapi==0.104.1
+uvicorn==0.24.0
+pydantic==2.5.0
+
+# Data processing
+pandas==2.1.3
+numpy==1.26.2
+
+# Machine Learning
+scikit-learn==1.3.2
+joblib==1.3.2
+
+# Optional: MT5 integration (install separately if needed)
+# MetaTrader5>=5.0.40
+
+# Optional: Deep Learning (install separately if needed)
+# tensorflow>=2.13.0
+# torch>=2.0.0
+
+# Utilities
+python-dateutil==2.8.2
+pytz==2023.3
